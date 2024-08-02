@@ -6,7 +6,12 @@ module.exports = {
     '@remix-run/eslint-config',
     'plugin:hydrogen/recommended',
     'plugin:hydrogen/typescript',
+    'eslint:recommended', 
+    'plugin:@typescript-eslint/recommended',
   ],
+
+  plugins: ['@typescript-eslint'],
+
   rules: {
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/naming-convention': 'off',
@@ -15,5 +20,6 @@ module.exports = {
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
     'no-case-declarations': 'off',
     'no-console': ['warn', {allow: ['warn', 'error']}],
+    'prettier/prettier': ['off', { singleQuote: true }],
   },
 };

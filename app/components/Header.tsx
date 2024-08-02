@@ -21,17 +21,14 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
+    <header className="header flex items-center justify-between px-4 py-2"> {/* Added flex styles */}
+      <NavLink prefetch="intent" to="/" style={activeLinkStyle}  end>
+        <strong className='text-zinc-100'>{shop.name}</strong>
       </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      <div className="flex space-x-4"> {/* Added flex styles for children */}
+        <SearchToggle />
+        <HeaderMenuMobileToggle />
+      </div>
     </header>
   );
 }
@@ -57,74 +54,74 @@ export function HeaderMenu({
   }
 
   return (
-    <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={closeAside}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
-          Home
-        </NavLink>
-      )}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
+    <nav className={className} role="navigation">   
 
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        return (
+      <ul className="flex-col space-x-4"> {/* Tailwind classes for horizontal spacing */}
+        <li>
           <NavLink
-            className="header-menu-item"
+            className="px-3 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-md active:bg-gray-100"
             end
-            key={item.id}
             onClick={closeAside}
             prefetch="intent"
             style={activeLinkStyle}
-            to={url}
+            to="/"
           >
-            {item.title}
+            Home
           </NavLink>
-        );
-      })}
+        </li>
+        <li>
+          <NavLink
+            className="px-3 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-md active:bg-gray-100"
+            end
+            onClick={closeAside}
+            prefetch="intent"
+            style={activeLinkStyle}
+            to="/artists"
+          >
+            Artists
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            className="px-3 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-md active:bg-gray-100"
+            end
+            onClick={closeAside}
+            prefetch="intent"
+            style={activeLinkStyle}
+            to="/about-us" // Assuming your about us page path is '/about-us'
+          >
+            About Us
+          </NavLink>
+        </li>
+        
+        {/* Rest of your menu items can be added here */}
+      </ul>
     </nav>
   );
 }
 
-function HeaderCtas({
-  isLoggedIn,
-  cart,
-}: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
-  return (
-    <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        <Suspense fallback="Sign in">
-          <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
-          </Await>
-        </Suspense>
-      </NavLink>
-      <SearchToggle />
-      <CartToggle cart={cart} />
-    </nav>
-  );
-}
 
 function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
     <button
-      className="header-menu-mobile-toggle reset"
+      className=" flex items-center justify-center w-10 h-10 rounded-5 bg-zinc-950 transition-bg duration-300 hover:bg-zinc-900 focus:outline-none"
       onClick={() => open('mobile')}
     >
-      <h3>☰</h3>
+      <svg
+        className="w-6 h-6 text-gray-100"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
     </button>
   );
 }
@@ -133,8 +130,11 @@ function SearchToggle() {
   const {open} = useAside();
   return (
     <button className="reset" onClick={() => open('search')}>
-      Search
+      <svg className="w-6 h-6 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
     </button>
+
   );
 }
 

@@ -1,7 +1,10 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {Suspense} from 'react';
-import {Image, Money} from '@shopify/hydrogen';
+import {Image} from '@shopify/hydrogen';
+
+import Categories from '~/components/Categories';
+import WelcomeGrid from '~/components/WelcomeGrid';
 import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
@@ -59,7 +62,9 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
+      
       <FeaturedCollection collection={data.featuredCollection} />
+      <WelcomeGrid />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -73,17 +78,11 @@ function FeaturedCollection({
   if (!collection) return null;
   const image = collection?.image;
   return (
-    <Link
-      className="featured-collection"
-      to={`/collections/${collection.handle}`}
-    >
-      {image && (
-        <div className="featured-collection-image">
+    
+        <div className="h-50vh w-full object-cover bg-center bg-no-repeat">
           <Image data={image} sizes="100vw" />
         </div>
-      )}
-      <h1>{collection.title}</h1>
-    </Link>
+      
   );
 }
 
@@ -93,29 +92,27 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery | null>;
 }) {
   return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
+    <div className="recommended-products container mx-auto px-4 py-8">
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="recommended-products-grid">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {response
                 ? response.products.nodes.map((product) => (
-                    <Link
-                      key={product.id}
-                      className="recommended-product"
-                      to={`/products/${product.handle}`}
-                    >
+                  <Link
+                    key={product.id}
+                    className="recommended-product bg-zinc-900 rounded-3xl shadow hover:shadow-lg hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center gap-4 group"
+                    to={`/products/${product.handle}`}
+                  >
+                    <div className="rounded-t-3xl overflow-hidden w-full">
                       <Image
                         data={product.images.nodes[0]}
                         aspectRatio="1/1"
-                        sizes="(min-width: 45em) 20vw, 50vw"
+                        sizes="w-full h-auto object-contain"
                       />
-                      <h4>{product.title}</h4>
-                      <small>
-                        <Money data={product.priceRange.minVariantPrice} />
-                      </small>
-                    </Link>
+                    </div>
+                    <h4 className="text-lg font-medium text-zinc-400 transition-colors duration-300 group-hover:text-zinc-100">{product.title}</h4>
+                  </Link>
                   ))
                 : null}
             </div>
@@ -129,8 +126,7 @@ function RecommendedProducts({
 
 const FEATURED_COLLECTION_QUERY = `#graphql
   fragment FeaturedCollection on Collection {
-    id
-    title
+    
     image {
       id
       url
@@ -155,6 +151,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     id
     title
     handle
+    vendor
     priceRange {
       minVariantPrice {
         amount
@@ -173,7 +170,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+    products(first: 8, sortKey: TITLE, reverse: true) {
       nodes {
         ...RecommendedProduct
       }

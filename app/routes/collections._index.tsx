@@ -86,22 +86,19 @@ function CollectionItem({
   index: number;
 }) {
   return (
-    <Link
-      className="collection-item"
-      key={collection.id}
-      to={`/collections/${collection.handle}`}
-      prefetch="intent"
-    >
+    <Link className="collection-item group" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
       {collection?.image && (
         <Image
           alt={collection.image.altText || collection.title}
           aspectRatio="1/1"
           data={collection.image}
           loading={index < 3 ? 'eager' : undefined}
+          className="group-hover:scale-105 transition duration-300 ease-in-out" // Hover styles
         />
       )}
-      <h5>{collection.title}</h5>
+      <h5 className="font-semibold"> {collection.title}</h5>
     </Link>
+
   );
 }
 

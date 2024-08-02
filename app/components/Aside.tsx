@@ -1,4 +1,4 @@
-import {createContext, type ReactNode, useContext, useState} from 'react';
+import { createContext, type ReactNode, useContext, useState } from 'react';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -26,28 +26,37 @@ export function Aside({
   type: AsideType;
   heading: React.ReactNode;
 }) {
-  const {type: activeType, close} = useAside();
+  const { type: activeType, close } = useAside();
   const expanded = type === activeType;
 
   return (
     <div
       aria-modal
-      className={`overlay ${expanded ? 'expanded' : ''}`}
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 transition-opacity duration-300 ${
+        expanded ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      }`}
       role="dialog"
     >
-      <button className="close-outside" onClick={close} />
-      <aside>
-        <header>
-          <h3>{heading}</h3>
-          <button className="close reset" onClick={close}>
-            &times;
-          </button>
-        </header>
-        <main>{children}</main>
-      </aside>
+      <div
+        className={`absolute top-0 right-0 w-80 h-full bg-white shadow-md p-6 transition-transform duration-300 ${
+          expanded ? 'translate-x-0' : 'translate-x-full'
+        }`} // Add transition and transform classes
+      >
+        <button
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-5xl"
+          onClick={close}
+        >
+          &times;
+        </button>
+        <h3 className="text-xl font-bold mb-4">{heading}</h3>
+        <main className="flex-1 overflow-y-auto">{children}</main>
+      </div>
     </div>
   );
 }
+
+// ... rest of the Aside component
+
 
 const AsideContext = createContext<AsideContextValue | null>(null);
 

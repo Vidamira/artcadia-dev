@@ -4,3 +4,11 @@
  */
 
 @import 'tailwindcss';
+
+/* Global styles */
+body {
+    background-color: #09090B; /* Tailwind zinc-950 */
+    color: #F9FAFC; /* Tailwind gray-100 */
+    font-family: sans-serif; /* Add a default font family if needed */
+    margin: 0; /* Reset default margin */
+  }

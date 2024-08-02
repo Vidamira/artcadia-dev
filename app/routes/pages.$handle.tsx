@@ -55,11 +55,13 @@ export default function Page() {
   const {page} = useLoaderData<typeof loader>();
 
   return (
-    <div className="page">
-      <header>
-        <h1>{page.title}</h1>
+    <div className="bg-black text-white min-h-screen">
+      <header className="text-center py-8">
+        <h1 className="text-3xl font-bold">{page.title}</h1>
       </header>
-      <main dangerouslySetInnerHTML={{__html: page.body}} />
+      <main className="container mx-auto px-4 py-8">
+        <div dangerouslySetInnerHTML={{__html: page.body}} />
+      </main>
     </div>
   );
 }
