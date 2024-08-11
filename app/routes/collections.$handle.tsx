@@ -74,25 +74,35 @@ export default function Collection() {
   const { collection } = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection bg-zinc-950 text-zinc-100 flex flex-col md:flex-row md:items-center md:gap-8 p-8">
-      {collection?.image && (
-        <Image
-          alt={collection.image.altText || collection.title}
-          aspectRatio="1/1"
-          data={collection.image}
-          loading="eager" // Ensure eager loading for the main image
-          className="w-full md:w-1/2 rounded-lg shadow-md overflow-hidden" // Adjust width and styling for image
-        />
-      )}
+    <div className="collection bg-zinc-950 text-zinc-100 flex flex-col md:flex-col md:max-w-7xl md:items-center md:gap-8 p-8">
+        <div className="flex flex-col md:flex-row space-y-4  md:">
+          <div className=' flex flex-col md:order md:flex-row-reverse  md:max-h-64'>
+            {collection?.image && (
+              <Image
+                alt={collection.image.altText || collection.title}
+                aspectRatio="1/1"
+                data={collection.image}
+                loading="eager" // Ensure eager loading for the main image
+                className=" md:w-48 object-cover object-center rounded-lg shadow-md overflow-hidden" // Adjust width and styling for image
+              />
+            )}
+            <div className='flex-col mb-5 md:mb-0 mr-5'>
+            <h1>{collection.title}</h1>
+            <p className="collection-description md: max-w-5xl text-zinc-500">{collection.description}</p> 
+            </div>
+          </div>
+          
+       
+      </div>
+      
       <div className="flex flex-col space-y-4">
-        <h1>{collection.title}</h1>
-        <p className="collection-description text-zinc-500">{collection.description}</p>
+        
         <Pagination connection={collection.products}>
           {({ nodes, isLoading, PreviousLink, NextLink }) => (
             <>
               <PreviousLink>
                 {isLoading ? 'Loading...'   
- : <span className="text-zinc-500">↑ Load previous</span>}
+             : <span className="text-zinc-500">↑ Load previous</span>}
               </PreviousLink>
               <ProductsGrid products={nodes} />
               <br />
@@ -130,7 +140,7 @@ function ProductItem({ product, loading }: { product: ProductItemFragment; loadi
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
     <Link
-      className="product-item bg-zinc-700 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105"
+      className="product-item bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105"
       key={product.id}
       prefetch="intent"
       to={variantUrl}
@@ -144,10 +154,13 @@ function ProductItem({ product, loading }: { product: ProductItemFragment; loadi
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
-      <small>
-        <Money data={product.priceRange.minVariantPrice} />
-      </small>
+      <div className='p-2 text-zinc-100'>
+        <h4 className='text-1xl'>{product.title}</h4>
+        <small>
+          <Money data={product.priceRange.minVariantPrice} />
+        </small>
+      </div>
+      
     </Link>
   );
 }
@@ -205,6 +218,13 @@ const COLLECTION_QUERY = `#graphql
       handle
       title
       description
+      image {
+      id
+      url
+      altText
+      width
+      height
+    }
       products(
         first: $first,
         last: $last,

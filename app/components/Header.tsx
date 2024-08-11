@@ -21,11 +21,15 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header flex items-center justify-between px-4 py-2"> {/* Added flex styles */}
+    <header className="header flex items-stretch justify-between px-4 md:px-8 py-2">
       <NavLink prefetch="intent" to="/" style={activeLinkStyle}  end>
-        <strong className='text-zinc-100'>{shop.name}</strong>
+      <img
+        src="app\assets\artcadia-logo-white.png" // Adjust file path if needed
+        alt="Artcadia Logo" // Add alt text for accessibility
+        className="h-10 w-auto" // Adjust height and width as needed
+      />
       </NavLink>
-      <div className="flex space-x-4"> {/* Added flex styles for children */}
+      <div className="flex space-x-4">
         <SearchToggle />
         <HeaderMenuMobileToggle />
       </div>

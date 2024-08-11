@@ -67,7 +67,7 @@ export default function Homepage() {
   const { collections } = useLoaderData<typeof loader>();
 
   return (
-    <div className="collections bg-zinc-950 text-zinc-100">
+    <div className="container mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
        <Slider />
 
       <RevealOnScroll>
@@ -99,7 +99,7 @@ function CollectionsGrid({ collections }: { collections: CollectionFragment[] })
 
 function CollectionItem({ collection, index }: { collection: CollectionFragment; index: number }) {
   return (
-    <Link className="collection-item group bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
+    <Link className="collection-item group bg-zinc-900 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
       {collection?.image && (
         <Image
           alt={collection.image.altText || collection.title}
@@ -110,7 +110,7 @@ function CollectionItem({ collection, index }: { collection: CollectionFragment;
         />
       )}
       <div className="p-4">
-        <h5 className="font-semibold"> {collection.title}</h5>
+        <h5 className="font-semibold text-zinc-100"> {collection.title}</h5>
         
         {/* Truncate description to 50 characters and add ellipsis if needed */}
       </div>
