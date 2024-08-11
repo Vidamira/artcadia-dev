@@ -42,14 +42,14 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 }
 
 export default function Collections() {
-  const {collections} = useLoaderData<typeof loader>();
+  const { collections } = useLoaderData<typeof loader>();
 
   return (
-    <div className="collections">
+    <div className="collections bg-zinc-950 text-zinc-100">
       <h1>Collections</h1>
       <Pagination connection={collections}>
-        {({nodes, isLoading, PreviousLink, NextLink}) => (
-          <div>
+        {({ nodes, isLoading, PreviousLink, NextLink }) => (
+          <div className="flex justify-between">
             <PreviousLink>
               {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
             </PreviousLink>
@@ -64,43 +64,38 @@ export default function Collections() {
   );
 }
 
-function CollectionsGrid({collections}: {collections: CollectionFragment[]}) {
+function CollectionsGrid({ collections }: { collections: CollectionFragment[] }) {
   return (
-    <div className="collections-grid">
+    <div className="collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {collections.map((collection, index) => (
-        <CollectionItem
-          key={collection.id}
-          collection={collection}
-          index={index}
-        />
+        <CollectionItem key={collection.id} collection={collection} index={index} />
       ))}
     </div>
   );
 }
 
-function CollectionItem({
-  collection,
-  index,
-}: {
-  collection: CollectionFragment;
-  index: number;
-}) {
+
+function CollectionItem({ collection, index }: { collection: CollectionFragment; index: number }) {
   return (
-    <Link className="collection-item group" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
+    <Link className="collection-item group bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
       {collection?.image && (
         <Image
           alt={collection.image.altText || collection.title}
           aspectRatio="1/1"
           data={collection.image}
           loading={index < 3 ? 'eager' : undefined}
-          className="group-hover:scale-105 transition duration-300 ease-in-out" // Hover styles
+          className="group-hover:opacity-75" // Hover styles for image
         />
       )}
-      <h5 className="font-semibold"> {collection.title}</h5>
+      <div className="p-4">
+        <h5 className="font-semibold"> {collection.title}</h5>
+        
+        {/* Truncate description to 50 characters and add ellipsis if needed */}
+      </div>
     </Link>
-
   );
 }
+
 
 const COLLECTIONS_QUERY = `#graphql
   fragment Collection on Collection {

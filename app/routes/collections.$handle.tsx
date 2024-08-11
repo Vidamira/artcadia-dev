@@ -71,26 +71,38 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 }
 
 export default function Collection() {
-  const {collection} = useLoaderData<typeof loader>();
+  const { collection } = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
-      <Pagination connection={collection.products}>
-        {({nodes, isLoading, PreviousLink, NextLink}) => (
-          <>
-            <PreviousLink>
-              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-            </PreviousLink>
-            <ProductsGrid products={nodes} />
-            <br />
-            <NextLink>
-              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-            </NextLink>
-          </>
-        )}
-      </Pagination>
+    <div className="collection bg-zinc-950 text-zinc-100 flex flex-col md:flex-row md:items-center md:gap-8 p-8">
+      {collection?.image && (
+        <Image
+          alt={collection.image.altText || collection.title}
+          aspectRatio="1/1"
+          data={collection.image}
+          loading="eager" // Ensure eager loading for the main image
+          className="w-full md:w-1/2 rounded-lg shadow-md overflow-hidden" // Adjust width and styling for image
+        />
+      )}
+      <div className="flex flex-col space-y-4">
+        <h1>{collection.title}</h1>
+        <p className="collection-description text-zinc-500">{collection.description}</p>
+        <Pagination connection={collection.products}>
+          {({ nodes, isLoading, PreviousLink, NextLink }) => (
+            <>
+              <PreviousLink>
+                {isLoading ? 'Loading...'   
+ : <span className="text-zinc-500">↑ Load previous</span>}
+              </PreviousLink>
+              <ProductsGrid products={nodes} />
+              <br />
+              <NextLink>
+                {isLoading ? 'Loading...' : <span className="text-zinc-500">Load more ↓</span>}
+              </NextLink>
+            </>
+          )}
+        </Pagination>
+      </div>
       <Analytics.CollectionView
         data={{
           collection: {
@@ -103,34 +115,22 @@ export default function Collection() {
   );
 }
 
-function ProductsGrid({products}: {products: ProductItemFragment[]}) {
+function ProductsGrid({ products }: { products: ProductItemFragment[] }) {
   return (
-    <div className="products-grid">
-      {products.map((product, index) => {
-        return (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
-        );
-      })}
+    <div className="products-grid grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
+      {products.map((product, index) => (
+        <ProductItem key={product.id} product={product} loading={index < 8 ? 'eager' : undefined} />
+      ))}
     </div>
   );
 }
 
-function ProductItem({
-  product,
-  loading,
-}: {
-  product: ProductItemFragment;
-  loading?: 'eager' | 'lazy';
-}) {
+function ProductItem({ product, loading }: { product: ProductItemFragment; loading?: 'eager' | 'lazy' }) {
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
     <Link
-      className="product-item"
+      className="product-item bg-zinc-700 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105"
       key={product.id}
       prefetch="intent"
       to={variantUrl}
@@ -151,6 +151,7 @@ function ProductItem({
     </Link>
   );
 }
+
 
 const PRODUCT_ITEM_FRAGMENT = `#graphql
   fragment MoneyProductItem on MoneyV2 {

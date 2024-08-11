@@ -127,13 +127,13 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const {product, variants} = useLoaderData<typeof loader>();
+  const { product, variants } = useLoaderData<typeof loader>();
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,
     variants,
   );
 
-  const {title, descriptionHtml} = product;
+  const { title, descriptionHtml } = product;
 
   return (
     <div className="product container mx-auto px-4 py-16">
@@ -170,13 +170,16 @@ export default function Product() {
           </Suspense>
           <br />
           <br />
-          <p   
- className="text-lg text-zinc-400 font-medium">
+          <p className="text-lg text-zinc-400 font-medium">
             <strong>Description</strong>
           </p>
           <br />
           <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
           <br />
+          {/* Link to vendor products */}
+          <a href={`/collections/${String(product.vendor)?.toLowerCase().replace(/\s+/g, '-')}`}>
+            See all products by {product.vendor}
+          </a>
         </div>
       </div>
       <Analytics.ProductView
@@ -197,6 +200,8 @@ export default function Product() {
     </div>
   );
 }
+
+
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
   fragment ProductVariant on ProductVariant {

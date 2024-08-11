@@ -1,13 +1,16 @@
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {Suspense} from 'react';
-import {Image} from '@shopify/hydrogen';
+import {Pagination, getPaginationVariables,Image} from '@shopify/hydrogen';
+import RevealOnScroll from '~/components/animations/RevealOnScroll'
 
-import Categories from '~/components/Categories';
+
 import WelcomeGrid from '~/components/WelcomeGrid';
+import Slider from '~/components/Slider';
 import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
+  CollectionFragment,
 } from 'storefrontapi.generated';
 
 export const meta: MetaFunction = () => {
@@ -28,15 +31,21 @@ export async function loader(args: LoaderFunctionArgs) {
  * Load data necessary for rendering content above the fold. This is the critical data
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
-async function loadCriticalData({context}: LoaderFunctionArgs) {
-  const [{collections}] = await Promise.all([
-    context.storefront.query(FEATURED_COLLECTION_QUERY),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
+async function loadCriticalData({context, request}: LoaderFunctionArgs) {
+  const paginationVariables = getPaginationVariables(request, {
+    pageBy: 8,
+  });
 
-  return {
-    featuredCollection: collections.nodes[0],
-  };
+  const [{collections}] = await Promise.all([
+    context.storefront.query(COLLECTIONS_QUERY, {
+      variables: paginationVariables,
+    }),
+    // Add other queries here, so that they are loaded in parallel
+  ]);   
+
+  return {collections};
+
+  
 }
 
 /**
@@ -45,88 +54,77 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
-  const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-      console.error(error);
-      return null;
-    });
-
-  return {
-    recommendedProducts,
-  };
+  return {};
 }
+
+
+
+
+
+
 
 export default function Homepage() {
-  const data = useLoaderData<typeof loader>();
+  const { collections } = useLoaderData<typeof loader>();
+
   return (
-    <div className="home">
-      
-      <FeaturedCollection collection={data.featuredCollection} />
+    <div className="collections bg-zinc-950 text-zinc-100">
+       <Slider />
+
+      <RevealOnScroll>
       <WelcomeGrid />
-      <RecommendedProducts products={data.recommendedProducts} />
+      </RevealOnScroll>
+      <Pagination connection={collections}>
+        {({ nodes, isLoading, PreviousLink, NextLink }) => (
+          <div className="flex justify-between p-8">
+            
+            <CollectionsGrid collections={nodes} />
+            
+          </div>
+        )}
+      </Pagination>
     </div>
   );
 }
 
-function FeaturedCollection({
-  collection,
-}: {
-  collection: FeaturedCollectionFragment;
-}) {
-  if (!collection) return null;
-  const image = collection?.image;
+function CollectionsGrid({ collections }: { collections: CollectionFragment[] }) {
   return (
-    
-        <div className="h-50vh w-full object-cover bg-center bg-no-repeat">
-          <Image data={image} sizes="100vw" />
-        </div>
-      
-  );
-}
-
-function RecommendedProducts({
-  products,
-}: {
-  products: Promise<RecommendedProductsQuery | null>;
-}) {
-  return (
-    <div className="recommended-products container mx-auto px-4 py-8">
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {(response) => (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {response
-                ? response.products.nodes.map((product) => (
-                  <Link
-                    key={product.id}
-                    className="recommended-product bg-zinc-900 rounded-3xl shadow hover:shadow-lg hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center gap-4 group"
-                    to={`/products/${product.handle}`}
-                  >
-                    <div className="rounded-t-3xl overflow-hidden w-full">
-                      <Image
-                        data={product.images.nodes[0]}
-                        aspectRatio="1/1"
-                        sizes="w-full h-auto object-contain"
-                      />
-                    </div>
-                    <h4 className="text-lg font-medium text-zinc-400 transition-colors duration-300 group-hover:text-zinc-100">{product.title}</h4>
-                  </Link>
-                  ))
-                : null}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <br />
+    <div className="collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {collections.map((collection, index) => (
+        <CollectionItem key={collection.id} collection={collection} index={index} />
+      ))}
     </div>
   );
 }
 
-const FEATURED_COLLECTION_QUERY = `#graphql
-  fragment FeaturedCollection on Collection {
-    
+
+function CollectionItem({ collection, index }: { collection: CollectionFragment; index: number }) {
+  return (
+    <Link className="collection-item group bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
+      {collection?.image && (
+        <Image
+          alt={collection.image.altText || collection.title}
+          aspectRatio="1/1"
+          data={collection.image}
+          loading={index < 3 ? 'eager' : undefined}
+          className="group-hover:opacity-75" // Hover styles for image
+        />
+      )}
+      <div className="p-4">
+        <h5 className="font-semibold"> {collection.title}</h5>
+        
+        {/* Truncate description to 50 characters and add ellipsis if needed */}
+      </div>
+    </Link>
+  );
+}
+
+
+
+const COLLECTIONS_QUERY = `#graphql
+  fragment Collection on Collection {
+    id
+    title
+    handle
     image {
       id
       url
@@ -134,45 +132,29 @@ const FEATURED_COLLECTION_QUERY = `#graphql
       width
       height
     }
-    handle
   }
-  query FeaturedCollection($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
+  query StoreCollections(
+    $country: CountryCode
+    $endCursor: String
+    $first: Int
+    $language: LanguageCode
+    $last: Int
+    $startCursor: String
+  ) @inContext(country: $country, language: $language) {
+    collections(
+      first: $first,
+      last: $last,
+      before: $startCursor,
+      after: $endCursor
+    ) {
       nodes {
-        ...FeaturedCollection
+        ...Collection
       }
-    }
-  }
-` as const;
-
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
-    id
-    title
-    handle
-    vendor
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-    images(first: 1) {
-      nodes {
-        id
-        url
-        altText
-        width
-        height
-      }
-    }
-  }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
-    @inContext(country: $country, language: $language) {
-    products(first: 8, sortKey: TITLE, reverse: true) {
-      nodes {
-        ...RecommendedProduct
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }

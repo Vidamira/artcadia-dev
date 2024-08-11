@@ -71,7 +71,7 @@ function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
 function SearchAside() {
   return (
     <Aside type="search" heading="SEARCH">
-      <div className="predictive-search">
+      <div className="predictive-search text-zinc-900">
         <br />
         <PredictiveSearchForm>
           {({fetchResults, inputRef}) => (
@@ -86,6 +86,7 @@ function SearchAside() {
               />
               &nbsp;
               <button
+                className="bg-indigo-500 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded shadow-sm"
                 onClick={() => {
                   window.location.href = inputRef?.current?.value
                     ? `/search?q=${inputRef.current.value}`
