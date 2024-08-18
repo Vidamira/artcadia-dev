@@ -9,6 +9,7 @@ import {
 } from '@shopify/hydrogen';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
+import { motion } from 'framer-motion';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
@@ -74,21 +75,23 @@ export default function Collection() {
   const { collection } = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection bg-zinc-950 text-zinc-100 flex flex-col md:flex-col md:max-w-7xl md:items-center md:gap-8 p-8">
+    <div className="collection mx-auto bg-zinc-950 text-zinc-100 flex flex-col md:flex-col md:max-w-7xl md:items-center md:gap-8 p-8">
         <div className="flex flex-col md:flex-row space-y-4  md:">
           <div className=' flex flex-col md:order md:flex-row-reverse  md:max-h-64'>
             {collection?.image && (
               <Image
                 alt={collection.image.altText || collection.title}
                 aspectRatio="1/1"
+                width={400} // Adjust width as needed
+                height={400} // Maintain square aspect ratio
                 data={collection.image}
                 loading="eager" // Ensure eager loading for the main image
-                className=" md:w-48 object-cover object-center rounded-lg shadow-md overflow-hidden" // Adjust width and styling for image
+                className="object-center rounded-lg shadow-md overflow-hidden w-full md:w-1/2 lg:w-1/3" // Use Tailwind classes
               />
             )}
             <div className='flex-col mb-5 md:mb-0 mr-5'>
             <h1>{collection.title}</h1>
-            <p className="collection-description md: max-w-5xl text-zinc-500">{collection.description}</p> 
+            <p className="collection-description md: max-w-7xl text-zinc-500">{collection.description}</p> 
             </div>
           </div>
           
@@ -139,29 +142,42 @@ function ProductItem({ product, loading }: { product: ProductItemFragment; loadi
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
-    <Link
-      className="product-item bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105"
+    <motion.div
+      className="product-item bg-zinc-900 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105"
+      initial="initial"
+      animate="animate"
+    >
+        <Link
+      className="product-item bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 "
       key={product.id}
       prefetch="intent"
       to={variantUrl}
     >
-      {product.featuredImage && (
-        <Image
-          alt={product.featuredImage.altText || product.title}
-          aspectRatio="1/1"
-          data={product.featuredImage}
-          loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
-      )}
-      <div className='p-2 text-zinc-100'>
-        <h4 className='text-1xl'>{product.title}</h4>
-        <small>
-          <Money data={product.priceRange.minVariantPrice} />
-        </small>
-      </div>
+      
+        {product.featuredImage && (
+          <Image
+            alt={product.featuredImage.altText || product.title}
+            aspectRatio="1/1"
+            data={product.featuredImage}
+            loading={loading}
+            sizes="(min-width: 45em) 400px, 100vw"
+          />
+        )}
+        <div className='p-2 text-zinc-100'>
+          <h4 className='text-1xl'>{product.title}</h4>
+          <small>
+            <Money data={product.priceRange.minVariantPrice} />
+          </small>
+        </div>
+      
+      
       
     </Link>
+
+    </motion.div>
+      
+    
+    
   );
 }
 

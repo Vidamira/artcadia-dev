@@ -3,6 +3,7 @@ import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Pagination, getPaginationVariables, Image} from '@shopify/hydrogen';
 import type {CollectionFragment} from 'storefrontapi.generated';
 
+
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
@@ -46,14 +47,21 @@ export default function Collections() {
 
   return (
     <div className="collections bg-zinc-950 text-zinc-100">
+     
       <h1>Collections</h1>
+      
+      
+      
+      
       <Pagination connection={collections}>
         {({ nodes, isLoading, PreviousLink, NextLink }) => (
           <div className="flex justify-between">
             <PreviousLink>
               {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
             </PreviousLink>
-            <CollectionsGrid collections={nodes} />
+              
+                <CollectionsGrid collections={nodes} />
+              
             <NextLink>
               {isLoading ? 'Loading...' : <span>Load more ↓</span>}
             </NextLink>

@@ -2,6 +2,7 @@ import {Suspense} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {ProductFragment} from 'storefrontapi.generated';
+import { motion } from 'framer-motion';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -12,6 +13,7 @@ import {getVariantUrl} from '~/lib/variants';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import BackArrow from '~/components/BackArrow';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -136,16 +138,59 @@ export default function Product() {
   const { title, descriptionHtml } = product;
 
   return (
-    <div className="product container mx-auto px-4 py-16">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <ProductImage image={selectedVariant?.image} />
+    <div className="product container mx-auto px-4 py-16 text-zinc-800 bg-zinc-100 ">
+      
+      <motion.div
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.7 }}
+          className='relative flex justify-between w-full items-center'
+        >
+          <BackArrow />
+      <a href={`/collections/${String(product.vendor)?.toLowerCase().replace(/\s+/g, '-')}`} className="text-zinc-800">
+           {product.vendor}
+          </a>
+        </motion.div>
+      
+      <div className="grid mx-auto max-w-7xl md:max-w-7xl grid-cols-1 md:grid-cols-2 gap-8">
+      
+        <motion.div
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.7 }}
+          className='rounded'
+        >
+          <ProductImage image={selectedVariant?.image}  />
+        </motion.div>
+
+        
         <div className="product-main">
-          <h1 className="text-4xl font-bold text-zinc-400">{title}</h1>
-          <ProductPrice
-            price={selectedVariant?.price}
-            compareAtPrice={selectedVariant?.compareAtPrice}
-          />
-          <br />
+          
+          <motion.div
+            className="bg-zinc-100 p-4 rounded-lg shadow-md" // Add styling classes
+            initial={{ y: 20 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            
+            <h1 className="text-4xl font-bold text-zinc-800">{title}</h1>
+            <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+          </motion.div>
+
+          <motion.div
+            className="bg-zinc-100 p-4 rounded-lg shadow-md flex justify-between mt-10" // Add styling classes
+            initial={{ y: 20 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <strong>
+            <ProductPrice
+              price={selectedVariant?.price}
+              compareAtPrice={selectedVariant?.compareAtPrice}
+            />
+            </strong>
+             
+          
           <Suspense
             fallback={
               <ProductForm
@@ -160,7 +205,7 @@ export default function Product() {
               resolve={variants}
             >
               {(data) => (
-                <ProductForm
+                <ProductForm 
                   product={product}
                   selectedVariant={selectedVariant}
                   variants={data?.product?.variants.nodes || []}
@@ -168,18 +213,10 @@ export default function Product() {
               )}
             </Await>
           </Suspense>
-          <br />
-          <br />
-          <p className="text-lg text-zinc-400 font-medium">
-            <strong>Description</strong>
-          </p>
-          <br />
-          <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
-          <br />
-          {/* Link to vendor products */}
-          <a href={`/collections/${String(product.vendor)?.toLowerCase().replace(/\s+/g, '-')}`}>
-            See all products by {product.vendor}
-          </a>
+          </motion.div>
+
+          
+          
         </div>
       </div>
       <Analytics.ProductView

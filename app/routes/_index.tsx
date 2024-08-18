@@ -2,10 +2,12 @@ import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Pagination, getPaginationVariables,Image} from '@shopify/hydrogen';
-import RevealOnScroll from '~/components/animations/RevealOnScroll'
+
+import { motion, useScroll, useTransform } from "framer-motion";
 
 
 import WelcomeGrid from '~/components/WelcomeGrid';
+import TextParallaxContent from '~/components/TextParallaxContent';
 import Slider from '~/components/Slider';
 import type {
   FeaturedCollectionFragment,
@@ -70,9 +72,9 @@ export default function Homepage() {
     <div className="container mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
        <Slider />
 
-      <RevealOnScroll>
+       <motion.div animate={{ x: 100 }} />
       <WelcomeGrid />
-      </RevealOnScroll>
+      
       <Pagination connection={collections}>
         {({ nodes, isLoading, PreviousLink, NextLink }) => (
           <div className="flex justify-between p-8">
@@ -88,7 +90,7 @@ export default function Homepage() {
 
 function CollectionsGrid({ collections }: { collections: CollectionFragment[] }) {
   return (
-    <div className="collections-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="collections-grid grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {collections.map((collection, index) => (
         <CollectionItem key={collection.id} collection={collection} index={index} />
       ))}

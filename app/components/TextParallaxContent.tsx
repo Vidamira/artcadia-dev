@@ -1,13 +1,10 @@
 import React, { ReactNode, useRef } from "react";
-import { Link } from '@remix-run/react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from "framer-motion";
 import { FiArrowUpRight } from "react-icons/fi";
 
-// ... other imports
-
-export default function AboutUs() {
+export const TextParallaxContentExample = () => {
   return (
-    <div>
+    <div className="bg-zinc-950">
       <TextParallaxContent
         imgUrl="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         subheading="Collaborate"
@@ -31,7 +28,7 @@ export default function AboutUs() {
       </TextParallaxContent>
     </div>
   );
-}
+};
 
 const IMG_PADDING = 12;
 
@@ -151,4 +148,4 @@ const ExampleContent = () => (
   </div>
 );
 
-// ... rest of your TextParallaxContent component code
+export default TextParallaxContent

@@ -3,6 +3,10 @@ import {Await, NavLink} from '@remix-run/react';
 import {type CartViewPayload, useAnalytics} from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import {
+  PredictiveSearchForm,
+  PredictiveSearchResults,
+} from '~/components/Search';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -22,15 +26,15 @@ export function Header({
   const {shop, menu} = header;
   return (
     <header className="header flex items-stretch justify-between px-4 md:px-8 py-2">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle}  end>
-      <img
-        src="app\assets\artcadia-logo-white.png" // Adjust file path if needed
-        alt="Artcadia Logo" // Add alt text for accessibility
-        className="h-10 w-auto" // Adjust height and width as needed
-      />
+      <NavLink className="" prefetch="intent" to="/" end>
+        <img
+          src="app\assets\artcadia-logo-white.png" // Adjust file path if needed
+          alt="Artcadia Logo" // Add alt text for accessibility
+          className="h-10 w-auto" // Adjust height and width as needed
+        />
       </NavLink>
       <div className="flex space-x-4">
-        <SearchToggle />
+        
         <HeaderMenuMobileToggle />
       </div>
     </header>
@@ -60,7 +64,42 @@ export function HeaderMenu({
   return (
     <nav className={className} role="navigation">   
 
-      <ul className="flex-col space-x-4"> {/* Tailwind classes for horizontal spacing */}
+      <ul className="flex-col space-x-4"> 
+
+      {/* predictive seacrch form */}
+      <div className="predictive-search text-zinc-900">
+          <br />
+          <PredictiveSearchForm>
+            {({fetchResults, inputRef}) => (
+              <div className='flex'>
+                <input
+                  name="q"
+                  onChange={fetchResults}
+                  onFocus={fetchResults}
+                  placeholder="Search"
+                  ref={inputRef}
+                  type="search"
+                />
+                &nbsp;
+                <button
+                  className=""
+                  onClick={() => {
+                    window.location.href = inputRef?.current?.value
+                      ? `/search?q=${inputRef.current.value}`
+                      : `/search`;
+                  }}
+                >
+                  <svg className="w-6 h-6 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                </button>
+              </div>
+            )}
+          </PredictiveSearchForm>
+          <PredictiveSearchResults />
+        </div>
+
+
         <li>
           <NavLink
             className="px-3 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-md active:bg-gray-100"

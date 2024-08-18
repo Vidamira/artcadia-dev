@@ -48,7 +48,6 @@ export function Aside({
         >
           &times;
         </button>
-        <h3 className="text-xl font-bold mb-4">{heading}</h3>
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
