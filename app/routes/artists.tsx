@@ -3,7 +3,7 @@ import {useLoaderData, Link} from '@remix-run/react';
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Pagination, getPaginationVariables, Image} from '@shopify/hydrogen';
 import type {CollectionFragment} from 'storefrontapi.generated';
-
+import Reveal from '~/components/animations/Reveal';
 
 const blacklistedCollectionHandles = ['architecture', 'abstract', 'featured', 'paintings', 'figurative', 'portrait', 'photography', 'sculpture', 'landscapes', 'price-on-request', 'featured-artwork', 'the-team'];
 
@@ -134,8 +134,8 @@ function CollectionsGrid({ collections }: { collections: CollectionFragment[] })
 
 function CollectionItem({ collection, index }: { collection: CollectionFragment; index: number }) {
   return (
-    <Link className="collection-item   
- group bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
+    <Reveal>
+    <Link className="collection-item group bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
       {collection?.image && (
         <Image
           alt={collection.image.altText || collection.title}
@@ -147,11 +147,12 @@ function CollectionItem({ collection, index }: { collection: CollectionFragment;
         />
       )}
       <div className="p-4">
-        <h5 className="font-semibold"> {collection.title}</h5>
+        <h5 className="font-semibold text-zinc-100"> {collection.title}</h5>
 
         {/* Truncate description to 50 characters and add ellipsis if needed */}
       </div>
     </Link>
+    </Reveal>
   );
 }
 

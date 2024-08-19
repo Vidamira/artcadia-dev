@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+
+/* Global styles */
+
+@theme {
+  --text-7xl: 10rem;
+}

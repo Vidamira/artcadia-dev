@@ -3,6 +3,7 @@ import {Await, NavLink} from '@remix-run/react';
 import {type CartViewPayload, useAnalytics} from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import FlipLink from './animations/FlipLink';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,
@@ -28,7 +29,7 @@ export function Header({
     <header className="header flex items-stretch justify-between px-4 md:px-8 py-2">
       <NavLink className="" prefetch="intent" to="/" end>
         <img
-          src="app\assets\artcadia-logo-white.png" // Adjust file path if needed
+          src="app\assets\artcadia-logo-white.svg" // Adjust file path if needed
           alt="Artcadia Logo" // Add alt text for accessibility
           className="h-10 w-auto" // Adjust height and width as needed
         />
@@ -67,7 +68,7 @@ export function HeaderMenu({
       <ul className="flex-col space-x-4"> 
 
       {/* predictive seacrch form */}
-      <div className="predictive-search text-zinc-900">
+      <div className="predictive-search text-zinc-900 pb-10">
           <br />
           <PredictiveSearchForm>
             {({fetchResults, inputRef}) => (
@@ -101,40 +102,43 @@ export function HeaderMenu({
 
 
         <li>
-          <NavLink
-            className="px-3 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-md active:bg-gray-100"
+          <FlipLink
+            href={"/"}
+            className=""
             end
             onClick={closeAside}
             prefetch="intent"
-            style={activeLinkStyle}
+            
             to="/"
           >
             Home
-          </NavLink>
+          </FlipLink>
         </li>
         <li>
-          <NavLink
-            className="px-3 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-md active:bg-gray-100"
+          <FlipLink
+            href={"/artists"}
+            className=""
             end
             onClick={closeAside}
             prefetch="intent"
-            style={activeLinkStyle}
+            
             to="/artists"
           >
             Artists
-          </NavLink>
+          </FlipLink>
         </li>
         <li>
-          <NavLink
-            className="px-3 py-2 text-gray-700 hover:text-gray-900 font-medium rounded-md active:bg-gray-100"
+          <FlipLink
+            href={"/about-us"}
+            className=""
             end
             onClick={closeAside}
             prefetch="intent"
-            style={activeLinkStyle}
+            
             to="/about-us" // Assuming your about us page path is '/about-us'
           >
-            About Us
-          </NavLink>
+            About
+          </FlipLink>
         </li>
         
         {/* Rest of your menu items can be added here */}

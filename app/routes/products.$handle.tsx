@@ -138,21 +138,19 @@ export default function Product() {
   const { title, descriptionHtml } = product;
 
   return (
-    <div className="product container mx-auto px-4 py-16 text-zinc-800 bg-zinc-100 ">
-      
+    <div className="product container mx-auto px-4 py-16 text-zinc-800 bg-zinc-100  ">
+      <div className='Wrapper max-w-7xl md:max-w-7xl'>
       <motion.div
           initial={{ y: 20 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.7 }}
-          className='relative flex justify-between w-full items-center'
+          className='flex w-full justify-start'
         >
           <BackArrow />
-      <a href={`/collections/${String(product.vendor)?.toLowerCase().replace(/\s+/g, '-')}`} className="text-zinc-800">
-           {product.vendor}
-          </a>
+      
         </motion.div>
       
-      <div className="grid mx-auto max-w-7xl md:max-w-7xl grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid mx-auto  grid-cols-1 md:grid-cols-2 gap-8">
       
         <motion.div
           initial={{ y: 20 }}
@@ -172,7 +170,9 @@ export default function Product() {
             animate={{ y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            
+            <a href={`/collections/${String(product.vendor)?.toLowerCase().replace(/\s+/g, '-')}`} className="text-zinc-800">
+            {product.vendor}
+            </a>
             <h1 className="text-4xl font-bold text-zinc-800">{title}</h1>
             <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
           </motion.div>
@@ -234,6 +234,8 @@ export default function Product() {
           ],
         }}
       />
+      </div>
+      
     </div>
   );
 }

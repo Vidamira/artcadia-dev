@@ -10,7 +10,7 @@ const BackArrow = () => {
   return (
     <motion.button
       whileHover={{ scale: 1.1 }}
-      className="relative p-2 rounded-full bg-zinc-100 hover:shadow-md z-50 mb-2"
+      className="relative p-2 rounded-full hover:shadow-md z-50 mb-2"
       onClick={handleClick}
     >
       <FiArrowLeft size={30} color="currentColor" />

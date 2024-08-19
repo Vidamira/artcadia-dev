@@ -2,9 +2,10 @@ import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Pagination, getPaginationVariables,Image} from '@shopify/hydrogen';
-
+import SwipeCarousel from '~/components/SwipeCarousel';
 import { motion, useScroll, useTransform } from "framer-motion";
-
+import Reveal from '~/components/animations/Reveal';
+import Features from "~/components/Features";
 
 import WelcomeGrid from '~/components/WelcomeGrid';
 import TextParallaxContent from '~/components/TextParallaxContent';
@@ -67,30 +68,55 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const { collections } = useLoaderData<typeof loader>();
+  const features = [
+    {
+      id: 1,
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide1.png?v=1724007349",
+      subheading: "Public Spaces",
+      heading: "Let's find the perfect piece for your space.",
+    },
+    {
+      id: 2,
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide2.png?v=1724007350",
+      subheading: "Custom Art",
+      heading: "Dream it, own it. Commission unique artworks tailored to your vision.",
+    },
+    {
+      id: 3,
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
+      subheading: "Global Reach",
+      heading: "Artcadia delivers worldwide, bringing the world's finest art to your home.",
+    },
+    // ... other features
+  ];
 
   return (
     <div className="container mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
-       <Slider />
-
+      <SwipeCarousel />
+      <Reveal>
+       
        <motion.div animate={{ x: 100 }} />
       <WelcomeGrid />
+      </Reveal>
+
       
       <Pagination connection={collections}>
         {({ nodes, isLoading, PreviousLink, NextLink }) => (
           <div className="flex justify-between p-8">
-            
+            <Reveal>
             <CollectionsGrid collections={nodes} />
-            
+            </Reveal>
           </div>
         )}
       </Pagination>
+      <Features features={features} />
     </div>
   );
 }
 
 function CollectionsGrid({ collections }: { collections: CollectionFragment[] }) {
   return (
-    <div className="collections-grid grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="collections-grid grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
       {collections.map((collection, index) => (
         <CollectionItem key={collection.id} collection={collection} index={index} />
       ))}

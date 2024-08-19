@@ -10,6 +10,7 @@ import {
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import { motion } from 'framer-motion';
+import BackArrow from '~/components/BackArrow';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
@@ -76,7 +77,11 @@ export default function Collection() {
 
   return (
     <div className="collection mx-auto bg-zinc-950 text-zinc-100 flex flex-col md:flex-col md:max-w-7xl md:items-center md:gap-8 p-8">
+        <div className='flex w-full justify-start'>
+        <BackArrow />
+        </div>
         <div className="flex flex-col md:flex-row space-y-4  md:">
+         
           <div className=' flex flex-col md:order md:flex-row-reverse  md:max-h-64'>
             {collection?.image && (
               <Image
