@@ -9,7 +9,7 @@ const FlipLink = ({ href, children }) => {
     <motion.a
       href={href}
       className="relative block overflow-hidden whitespace-nowrap text-zinc-800 mb-10 text-4xl font-black uppercase sm:text-4xl md:text-5xl lg:text-6xl"
-      style={{ lineHeight: 0.75 }}
+      style={{ lineHeight: 0.9 }}
       initial="initial"
       whileHover="hovered"
     >

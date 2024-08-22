@@ -1,4 +1,5 @@
-import { createContext, type ReactNode, useContext, useState } from 'react';
+import { createContext, type ReactNode, useContext, useState, useRef, useEffect } from 'react';
+import onClickOutside from 'react-onclickoutside';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -28,6 +29,21 @@ export function Aside({
 }) {
   const { type: activeType, close } = useAside();
   const expanded = type === activeType;
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (overlayRef.current && !overlayRef.current.contains(event.target as Element)) {
+      close();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside); 
+
+    };
+  }, []);
 
   return (
     <div
@@ -38,7 +54,7 @@ export function Aside({
       role="dialog"
     >
       <div
-        className={`absolute top-0 right-0 w-80 h-full bg-white shadow-md p-6 transition-transform duration-300 ${
+        className={`absolute top-0 right-0 w-90 h-full bg-white shadow-md p-6 transition-transform duration-300 ${
           expanded ? 'translate-x-0' : 'translate-x-full'
         }`} // Add transition and transform classes
       >

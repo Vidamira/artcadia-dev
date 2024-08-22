@@ -78,7 +78,7 @@ export default function Homepage() {
     {
       id: 2,
       imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide2.png?v=1724007350",
-      subheading: "Custom Art",
+      subheading: "Custom Art", 
       heading: "Dream it, own it. Commission unique artworks tailored to your vision.",
     },
     {

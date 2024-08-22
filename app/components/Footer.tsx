@@ -1,6 +1,7 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from '@remix-run/react';
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import { motion } from 'framer-motion';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -17,7 +18,12 @@ export function Footer({
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="footer">
+          <motion.footer
+            className="footer bg-zinc-950 px-8 py-12 text-zinc-100"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {footer?.menu && header.shop.primaryDomain?.url && (
               <FooterMenu
                 menu={footer.menu}
@@ -25,7 +31,7 @@ export function Footer({
                 publicStoreDomain={publicStoreDomain}
               />
             )}
-          </footer>
+          </motion.footer>
         )}
       </Await>
     </Suspense>
@@ -34,7 +40,7 @@ export function Footer({
 
 function FooterMenu({
   menu,
-  primaryDomainUrl,
+  primaryDomainUrl, 
   publicStoreDomain,
 }: {
   menu: FooterQuery['menu'];
@@ -42,7 +48,11 @@ function FooterMenu({
   publicStoreDomain: string;
 }) {
   return (
-    <nav className="footer-menu" role="navigation">
+    <nav className="footer-menu flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between md:mx-7xl p-10" role="navigation">
+      <div className="w-20 h-20 mb-4 md:mb-0">
+        {/* Replace with your logo image */}
+        <img src="app\assets\artcadia-logo-white.svg" alt="Artcadia Gallery Logo" />
+      </div>
       {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
         // if the url is internal, we strip the domain
@@ -59,7 +69,7 @@ function FooterMenu({
           </a>
         ) : (
           <NavLink
-            end
+            end 
             key={item.id}
             prefetch="intent"
             style={activeLinkStyle}
