@@ -53,7 +53,7 @@ const BubbleText = () => {
   }, []);
 
   return (
-    <h2 className="hover-text text-left text-3xl md:text-7xl font-light text-zinc-100 contain:layout">
+    <h2 className="hover-text text-left text-3xl md:text-6xl font-light text-zinc-100 contain:layout">
       <Text>DISCOVER YOUR PERFECT PIECE</Text>
     </h2>
   );

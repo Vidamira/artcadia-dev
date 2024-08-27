@@ -69,6 +69,8 @@ export function HeaderMenu({
       <ul className="flex-col space-x-4"> 
 
       {/* predictive seacrch form */}
+      <br />
+      <br />
       <div className="predictive-search text-zinc-900 pb-10">
         <PredictiveSearchForm>
           {({ fetchResults, inputRef }) => (

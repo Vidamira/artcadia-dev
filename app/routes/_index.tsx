@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Reveal from '~/components/animations/Reveal';
 import Features from "~/components/Features";
 
+
 import WelcomeGrid from '~/components/WelcomeGrid';
 import TextParallaxContent from '~/components/TextParallaxContent';
 import Slider from '~/components/Slider';

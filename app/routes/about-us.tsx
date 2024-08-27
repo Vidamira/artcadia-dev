@@ -3,10 +3,18 @@ import { Link } from '@remix-run/react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiArrowUpRight } from "react-icons/fi";
 import Features from "~/components/Features";
+import HoverCard from '~/components/HoverCard';
 
 // ... other imports
 
+
+
 export default function AboutUs() {
+  const teamMembers = [
+    { imageUrl: 'https://cdn.shopify.com/s/files/1/0644/6075/1013/files/IMG_9199.jpg?v=1719782667', name: 'John Doe', emailUrl: 'john.doe@example.com' },
+    // ... other team members data
+  ];
+  
   const features = [
     {
       id: 1,
@@ -29,8 +37,9 @@ export default function AboutUs() {
     // ... other features
   ];
   return (
-    
+      
       <div>
+        <HoverCard teamMembers={teamMembers} />
         <Features features={features} />
       </div>
       

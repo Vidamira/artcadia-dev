@@ -108,14 +108,13 @@ export default function Collection() {
         <Pagination connection={collection.products}>
           {({ nodes, isLoading, PreviousLink, NextLink }) => (
             <>
-              <PreviousLink>
-                {isLoading ? 'Loading...'   
-             : <span className="text-zinc-500">↑ Load previous</span>}
-              </PreviousLink>
+              
               <ProductsGrid products={nodes} />
               <br />
-              <NextLink>
-                {isLoading ? 'Loading...' : <span className="text-zinc-500">Load more ↓</span>}
+              <NextLink className="text-zinc-950 bg-zinc-100 rounded mx-auto w-full text-center p-4 hover:scale-105 transition-transform duration-300 ease-in-out">
+                {isLoading ? 'Loading...' : (
+                  <span className='font-medium'>Load more ↓</span>
+                )}
               </NextLink>
             </>
           )}
