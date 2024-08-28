@@ -32,7 +32,7 @@ export function Header({
         <img
           src="app\assets\artcadia-logo-white.svg" // Adjust file path if needed
           alt="Artcadia Logo" // Add alt text for accessibility
-          className="h-10 w-auto" // Adjust height and width as needed
+          className="h-15 w-auto" // Adjust height and width as needed
         />
       </NavLink>
       <div className="flex space-x-4">

@@ -5,7 +5,7 @@ import {Pagination, getPaginationVariables, Image} from '@shopify/hydrogen';
 import type {CollectionFragment} from 'storefrontapi.generated';
 import Reveal from '~/components/animations/Reveal';
 
-const blacklistedCollectionHandles = ['architecture', 'abstract', 'featured', 'paintings', 'figurative', 'portrait', 'photography', 'sculpture', 'landscapes', 'price-on-request', 'featured-artwork', 'the-team'];
+const blacklistedCollectionHandles = ['architecture', 'abstract', 'slider', 'featured', 'paintings', 'figurative', 'portrait', 'photography', 'sculpture', 'landscapes', 'price-on-request', 'featured-artwork', 'the-team'];
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
@@ -23,7 +23,7 @@ export async function loader(args: LoaderFunctionArgs) {
  */
 async function loadCriticalData({context, request}: LoaderFunctionArgs) {
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 60,
+    pageBy: 65,
   });
 
   const [{collections}] = await Promise.all([
@@ -94,7 +94,7 @@ export default function Artists() {
   return (
     <div className="collections p-8 mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
       
-        <h1>Artists</h1>
+        
       
 
       <Pagination connection={collections}>
@@ -123,9 +123,16 @@ function CollectionsGrid({ collections }: { collections: CollectionFragment[] })
     (collection) => !blacklistedCollectionHandles.includes(collection.handle)
   );
 
+   // Sort filtered collections alphabetically by title
+   const sortedCollections = filteredCollections.sort((a, b) => {
+    const titleA = a.title.toLowerCase();
+    const titleB = b.title.toLowerCase();
+    return titleA.localeCompare(titleB);
+  });
+
   return (
     <div className="collections-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-      {filteredCollections.map((collection, index) => (
+      {sortedCollections.map((collection, index) => (
         <CollectionItem key={collection.id} collection={collection} index={index} />
       ))}
     </div>

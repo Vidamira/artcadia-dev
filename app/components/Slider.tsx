@@ -5,6 +5,7 @@ function Slider() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const slideImages = [
+    'https://cdn.shopify.com/s/files/1/0644/6075/1013/files/2024Grafik___2-Gros__Slider-_Artcadia-Wiederhergestellt.jpg?v=1724852920',
     'https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide1.png?v=1724007349',
     'https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide2.png?v=1724007350',
     'https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350',

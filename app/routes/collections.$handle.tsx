@@ -87,7 +87,7 @@ export default function Collection() {
               <Image
                 alt={collection.image.altText || collection.title}
                 aspectRatio="1/1"
-                width={400} // Adjust width as needed
+                width={350} // Adjust width as needed
                 height={400} // Maintain square aspect ratio
                 data={collection.image}
                 loading="eager" // Ensure eager loading for the main image
@@ -128,6 +128,7 @@ export default function Collection() {
           },
         }}
       />
+      
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { FiArrowUpRight } from "react-icons/fi";
 import Features from "~/components/Features";
 import HoverCard from '~/components/HoverCard';
+import Example from "~/components/Example";
 
 // ... other imports
 
@@ -39,6 +40,7 @@ export default function AboutUs() {
   return (
       
       <div>
+        <Example />
         <HoverCard teamMembers={teamMembers} />
         <Features features={features} />
       </div>

@@ -183,15 +183,16 @@ export default function Product() {
             animate={{ y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <strong>
-            <ProductPrice
-              price={selectedVariant?.price}
-              compareAtPrice={selectedVariant?.compareAtPrice}
-            />
-            </strong>
-             
-          
-          <Suspense
+            <div className='flex-row'>
+              <strong>
+              <ProductPrice
+                price={selectedVariant?.price}
+                compareAtPrice={selectedVariant?.compareAtPrice}
+              />
+              
+              </strong>
+              <p>Add your desired artworks to your cart and we'll create a custom order for you. You'll receive a confirmation email with pricing and lead times.</p>
+              <Suspense
             fallback={
               <ProductForm
                 product={product}
@@ -213,6 +214,9 @@ export default function Product() {
               )}
             </Await>
           </Suspense>
+            </div>  
+            
+          
           </motion.div>
 
           

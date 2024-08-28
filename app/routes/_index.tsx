@@ -6,7 +6,7 @@ import SwipeCarousel from '~/components/SwipeCarousel';
 import { motion, useScroll, useTransform } from "framer-motion";
 import Reveal from '~/components/animations/Reveal';
 import Features from "~/components/Features";
-
+import { FiArrowUpRight } from "react-icons/fi";
 
 import WelcomeGrid from '~/components/WelcomeGrid';
 import TextParallaxContent from '~/components/TextParallaxContent';
@@ -72,21 +72,39 @@ export default function Homepage() {
   const features = [
     {
       id: 1,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide1.png?v=1724007349",
-      subheading: "Public Spaces",
-      heading: "Let's find the perfect piece for your space.",
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
+      subheading: "Let's find the perfect piece for your space.",
+      heading: "Public Spaces",
+      customContent: {
+        heading: "Elevate Your Space with Artcadia",
+        description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
+        buttonLabel: "Explore Our Collections",
+        buttonLink: "/collections", // Replace with your desired link
+      },
     },
     {
       id: 2,
       imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide2.png?v=1724007350",
-      subheading: "Custom Art", 
-      heading: "Dream it, own it. Commission unique artworks tailored to your vision.",
+      subheading: "Dream it, own it. Commission unique artworks tailored to your vision.", 
+      heading: "Custom Art",
+      customContent: {
+        heading: "Create Your Custom Artpiece",
+        description: "Work with talented artists to design a one-of-a-kind artwork that perfectly complements your vision. Our custom art service ensures a personalized and memorable experience.",
+        buttonLabel: "Virtual Gallery",
+        buttonLink: "https://art.kunstmatrix.com/apps/artspaces/dist/index.html?timestamp=1720601973336#/?external=true&uid=9442&exhibition=5924601", // Replace with your desired link
+      },
     },
     {
       id: 3,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
-      subheading: "Global Reach",
-      heading: "Artcadia delivers worldwide, bringing the world's finest art to your home.",
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/IMG_4403.jpg?v=1724851959",
+      subheading: "Artcadia delivers worldwide, bringing the world's finest art to your home.",
+      heading: "Events",
+      customContent: {
+        heading: "Join Us for Artcadia Events",
+        description: "Discover exciting art events hosted by Artcadia. From exhibitions and workshops to artist talks, our events offer unique opportunities to engage with the art community.",
+        buttonLabel: "See Upcoming Events",
+        buttonLink: "/events", // Replace with your desired link
+      },
     },
     // ... other features
   ];
