@@ -99,7 +99,7 @@ export default function Artists() {
 
       <Pagination connection={collections}>
   {({ nodes, isLoading, PreviousLink, NextLink }) => (
-    <div className="flex justify-between ">
+    <div className="flex justify-between">
       
     
         <CollectionsGrid collections={nodes} />
@@ -141,7 +141,7 @@ function CollectionsGrid({ collections }: { collections: CollectionFragment[] })
 
 function CollectionItem({ collection, index }: { collection: CollectionFragment; index: number }) {
   return (
-    <Reveal>
+    
     <Link className="collection-item group bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
       {collection?.image && (
         <Image
@@ -159,7 +159,7 @@ function CollectionItem({ collection, index }: { collection: CollectionFragment;
         {/* Truncate description to 50 characters and add ellipsis if needed */}
       </div>
     </Link>
-    </Reveal>
+    
   );
 }
 
