@@ -7,7 +7,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Reveal from '~/components/animations/Reveal';
 import Features from "~/components/Features";
 import { FiArrowUpRight } from "react-icons/fi";
-
+import FeaturedCollection from '~/components/FeaturedCollection';
 import WelcomeGrid from '~/components/WelcomeGrid';
 import TextParallaxContent from '~/components/TextParallaxContent';
 import Slider from '~/components/Slider';
@@ -82,8 +82,13 @@ export default function Homepage() {
         buttonLink: "/collections", // Replace with your desired link
       },
     },
+    
+  ];
+
+  const features2 = [
+    
     {
-      id: 2,
+      id: 1,
       imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide2.png?v=1724007350",
       subheading: "Dream it, own it. Commission unique artworks tailored to your vision.", 
       heading: "Custom Art",
@@ -95,7 +100,7 @@ export default function Homepage() {
       },
     },
     {
-      id: 3,
+      id: 2,
       imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/IMG_4403.jpg?v=1724851959",
       subheading: "Artcadia delivers worldwide, bringing the world's finest art to your home.",
       heading: "Events",
@@ -129,6 +134,8 @@ export default function Homepage() {
         )}
       </Pagination>
       <Features features={features} />
+      
+      <Features features={features2} />
     </div>
   );
 }
