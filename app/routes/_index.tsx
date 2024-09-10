@@ -78,8 +78,8 @@ export default function Homepage() {
       customContent: {
         heading: "Elevate Your Space with Artcadia",
         description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
-        buttonLabel: "Explore Our Collections",
-        buttonLink: "/collections", // Replace with your desired link
+        buttonLabel: "Read more",
+        buttonLink: "/public-spaces", // Replace with your desired link
       },
     },
     
@@ -113,6 +113,8 @@ export default function Homepage() {
     },
     // ... other features
   ];
+  // featured collection name 
+  const handle = 'abstract';
 
   return (
     <div className="container mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
@@ -134,7 +136,7 @@ export default function Homepage() {
         )}
       </Pagination>
       <Features features={features} />
-      
+      <FeaturedCollection handle={handle} />
       <Features features={features2} />
     </div>
   );

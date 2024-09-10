@@ -55,12 +55,12 @@ function CartEmpty({
   return (
     <div hidden={hidden}>
       <br />
-      <p>
+      <p className='text-zinc-900 py-4'>
         Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
         started!
       </p>
       <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
+      <Link className='text-zinc-900' to="/artists" onClick={close} prefetch="viewport">
         Continue shopping →
       </Link>
     </div>

@@ -9,6 +9,7 @@ import {
   PredictiveSearchResults,
 } from '~/components/Search';
 import { motion } from "framer-motion";
+import { FaShoppingCart } from 'react-icons/fa';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -35,8 +36,8 @@ export function Header({
           className="h-15 w-auto" // Adjust height and width as needed
         />
       </NavLink>
-      <div className="flex space-x-4">
-        
+      <div className="flex space-x-4 items-center">
+       <CartBadge count={cart?.totalQuantity || 0} />
         <HeaderMenuMobileToggle />
       </div>
     </header>
@@ -160,7 +161,7 @@ function HeaderMenuMobileToggle() {
       onClick={() => open('mobile')}
     >
       <svg
-        className="w-6 h-6 text-gray-100"
+        className="w-6 h-6 text-zinc-100"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -189,9 +190,9 @@ function SearchToggle() {
   );
 }
 
-function CartBadge({count}: {count: number | null}) {
-  const {open} = useAside();
-  const {publish, shop, cart, prevCart} = useAnalytics();
+function CartBadge({ count }: { count: number | null }) {
+  const { open } = useAside();
+  const { publish, shop, cart, prevCart } = useAnalytics();
 
   return (
     <a
@@ -207,7 +208,9 @@ function CartBadge({count}: {count: number | null}) {
         } as CartViewPayload);
       }}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      <div className="cart-badge flex items-center justify-center">  <FaShoppingCart className="text-zinc-100 fa-lg" />
+        {count > 0 && <span className="cart-badge-count">{count}</span>}
+      </div>
     </a>
   );
 }
