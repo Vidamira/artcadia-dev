@@ -2,18 +2,21 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
 const imgs = [
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/2024Grafik__2-Gros_Slider-_Artcadia-Wiederhergestellt.jpg?v=1725450983",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik__2-Gross_Slider-_Artcadia.jpg?v=1720434305",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik__Gross_Slider-artcadia_ef120425-9b90-4a3a-bc06-1fe03a5ef8e0.jpg?v=1719568905",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/2024Grafik___2-Gros__Slider-_Artcadia-Wiederhergestellt.jpg?v=1725450983",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___2-Gross__Slider-_Artcadia.jpg?v=1720434305",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider-artcadia_ef120425-9b90-4a3a-bc06-1fe03a5ef8e0.jpg?v=1719568905",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik__GrossSlider_jens-ia.jpg?v=1720432258",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/110-Grafik__2-Gross_Slider-_Artcadia.jpg?v=1720452307",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik__Gross_Slider_Cu.-1.jpg?v=1719569059",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik__Gross_Slider_Atcadia_1b1c58c9-3400-48e8-9252-22de5fb4e3e8.jpg?v=1720432221",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik__Gross_Slider_ZHUORAN_Atcadia-1.jpg?v=1719585170",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_jens_-ia.jpg?v=1720432258",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/110-Grafik___2-Gross__Slider-_Artcadia.jpg?v=1720452307",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_Cu.-1.jpg?v=1719569059",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_Atcadia_1b1c58c9-3400-48e8-9252-22de5fb4e3e8.jpg?v=1720432221",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_ZHUORAN_Atcadia-1.jpg?v=1719585170",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide1.png?v=1724007349",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide4.png?v=1724007350",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik__Gross_Slider_llt.jpg?v=1719564210"
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide6.png?v=1724007350",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide7.png?v=1724007350",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide8.png?v=1724007350",
 ];
 
 const ONE_SECOND = 1000;
