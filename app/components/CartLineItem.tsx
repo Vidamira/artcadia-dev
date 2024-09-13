@@ -29,7 +29,7 @@ export function CartLineItem({
     initial={{ y: 20 }}
     animate={{ y: 0 }}
     transition={{ duration: 0.7 }}
-    className='relative flex justify-between w-full items-center'
+    className='relative flex justify-between w-full items-center pb-4'
   >
     
   </motion.div>

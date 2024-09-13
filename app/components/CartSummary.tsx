@@ -13,8 +13,8 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
+      <h4 className='text-zinc-900 font-bold pt-4'>Totals</h4>
+      <dl className="cart-subtotal text-zinc-900 font-light">
         <dt>Subtotal</dt>
         <dd>
           {cart.cost?.subtotalAmount?.amount ? (
@@ -24,7 +24,9 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
           )}
         </dd>
       </dl>
-      <CartDiscounts discountCodes={cart.discountCodes} />
+      <br />
+      <br />
+      <br />
       <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
     </div>
   );
@@ -34,10 +36,12 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
 
   return (
     <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
-      </a>
-      <br />
+      <button
+        className="bg-zinc-900 text-zinc-100 px-4 py-2 rounded-md hover:bg-zinc-500 hover:text-zinc-100"
+        onClick={() => window.location.href = checkoutUrl}
+      >
+        Continue to Checkout &rarr;
+      </button>
     </div>
   );
 }
@@ -59,7 +63,7 @@ function CartDiscounts({
         <div>
           <dt>Discount(s)</dt>
           <UpdateDiscountForm>
-            <div className="cart-discount">
+            <div className="cart-discount text-zinc-900">
               <code>{codes?.join(', ')}</code>
               &nbsp;
               <button>Remove</button>

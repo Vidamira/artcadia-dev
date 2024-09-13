@@ -178,7 +178,7 @@ const COLLECTIONS_QUERY = `#graphql
       height
     }
   }
-  query StoreCollections(
+  query StoreCollections2(
     $country: CountryCode
     $endCursor: String
     $first: Int = 8  # Adjust the default value here

@@ -105,13 +105,13 @@ const ExampleContent = () => (
       Additional content explaining the above card here
     </h2>
     <div className="col-span-1 md:col-span-8">
-      <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
+      <p className="mb-4 text-xl text-zinc-400 font-light md:text-2xl">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
         blanditiis soluta eius quam modi aliquam quaerat odit deleniti minima
         maiores voluptate est ut saepe accusantium maxime doloremque nulla
         consectetur possimus.
       </p>
-      <p className="mb-8 text-xl text-neutral-600 md:text-2xl">
+      <p className="mb-8 text-xl text-zinc-400font-light md:text-2xl">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
         reiciendis blanditiis aliquam aut fugit sint.
       </p>
@@ -137,7 +137,7 @@ const Features = ({ features }) => {
               {feature.customContent.heading}
             </h2>
             <div className="col-span-1 md:col-span-8">
-              <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
+              <p className="mb-4 text-xl text-zinc-400 font-light md:text-2xl">
                 {feature.customContent.description}
               </p>
               <button
