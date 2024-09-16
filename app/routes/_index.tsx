@@ -139,7 +139,7 @@ export default function Homepage() {
 
 function CollectionsGrid({ collections }: { collections: CollectionFragment[] }) {
   return (
-    <div className="collections-grid grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-10">
+    <div className="collections-grid grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
       {collections.map((collection, index) => (
         <CollectionItem key={collection.id} collection={collection} index={index} />
       ))}
@@ -159,7 +159,7 @@ function CollectionItem({ collection, index }: { collection: CollectionFragment;
           width={400} // Adjust width as needed
           height={400} // Maintain square aspect ratio
           loading={index < 3 ? 'eager' : undefined}
-          className="group-hover:opacity-75" // Hover styles for image
+          className="object-cover group-hover:opacity-75" // Hover styles for image
         />
       )}
       <div className="p-4">

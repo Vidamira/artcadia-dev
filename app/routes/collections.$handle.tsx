@@ -87,15 +87,15 @@ export default function Collection() {
               <Image
                 alt={collection.image.altText || collection.title}
                 aspectRatio="1/1"
-                width={350} // Adjust width as needed
+                width={400} // Adjust width as needed
                 height={400} // Maintain square aspect ratio
                 data={collection.image}
                 loading="eager" // Ensure eager loading for the main image
-                className="object-center rounded-lg shadow-md overflow-hidden w-full md:w-1/2 lg:w-1/3" // Use Tailwind classes
+                className="object-cover object-center rounded-lg shadow-md overflow-hidden w-full md:w-1/2 lg:w-1/3" // Use Tailwind classes
               />
             )}
             <div className='flex-col mb-5 md:mb-0 mr-5'>
-            <h1>{collection.title}</h1>
+            <h1 className='font-medium text-3xl mb-2 sm: mt-4 '>{collection.title}</h1>
             <p className="collection-description md: max-w-7xl text-zinc-500">{collection.description}</p> 
             </div>
           </div>
@@ -143,7 +143,7 @@ function ProductsGrid({ products }: { products: ProductItemFragment[] }) {
   );
 }
 
-function ProductItem({ product, loading }: { product: ProductItemFragment; loading?: 'eager' | 'lazy' }) {
+function ProductItem({ product, loading, vendor }: { product: ProductItemFragment; loading?: 'eager' | 'lazy'; vendor?: VendorType }) {
   const variant = product.variants.nodes[0];
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
@@ -152,37 +152,40 @@ function ProductItem({ product, loading }: { product: ProductItemFragment; loadi
       initial="initial"
       animate="animate"
     >
-        <Link
-      className="product-item bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 "
-      key={product.id}
-      prefetch="intent"
-      to={variantUrl}
-    >
-      
+      <Link
+        className="product-item bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 "
+        key={product.id}
+        prefetch="intent"
+        to={variantUrl}
+      >
         {product.featuredImage && (
           <Image
             alt={product.featuredImage.altText || product.title}
             aspectRatio="1/1"
             data={product.featuredImage}
             loading={loading}
-            sizes="(min-width: 45em) 400px, 100vw"
+            sizes="(min-width: 45em) 400px,   
+ 100vw"
+            className="object-cover"   
+
           />
         )}
-        <div className='p-2 text-zinc-100'>
-          <h4 className='text-1xl'>{product.title}</h4>
+        <div className="p-2 text-zinc-100">
+          <h4 className="text-1xl">{product.title}</h4>
           <small>
             <Money data={product.priceRange.minVariantPrice} />
           </small>
+          {vendor && ( // Conditionally render vendor details if available
+            <div className="flex items-center mt-2">
+              <p className="text-sm mr-2">By:</p>
+              <Link to={`/vendors/${vendor.handle}`} className="font-medium text-zinc-300 hover:underline">
+                {vendor.name}
+              </Link>
+            </div>
+          )}
         </div>
-      
-      
-      
-    </Link>
-
+      </Link>
     </motion.div>
-      
-    
-    
   );
 }
 

@@ -92,14 +92,27 @@ export default function Artists() {
 }, [hasNextPage, fetchNextPage]);
 
   return (
-    <div className="collections p-8 mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
-      
+    <div className="collections p-4 mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
+      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-20 pt-12 md:grid-cols-12">
+        <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
+        Explore a World of Artistic Expression
+        </h2>
+        <div className="col-span-1 md:col-span-8">
+          <p className="mb-4 text-xl text-zinc-400 font-light md:text-2xl">
+          Each of our artists offers a unique perspective and style, creating a 
+          gallery of truly one-of-a-kind pieces. From bold and abstract to delicate 
+          and intricate, there is something here for every art lover
+          </p>
+          
+        
+        </div>
+      </div>
         
       
 
       <Pagination connection={collections}>
   {({ nodes, isLoading, PreviousLink, NextLink }) => (
-    <div className="flex justify-between">
+    <div className="flex justify-between p-8">
       
     
         <CollectionsGrid collections={nodes} />
@@ -150,7 +163,7 @@ function CollectionItem({ collection, index }: { collection: CollectionFragment;
           data={collection.image}
           loading={index < 3 ? 'eager' : undefined}   
 
-          className="group-hover:opacity-75" // Hover styles for image
+          className="object-cover group-hover:opacity-75" // Hover styles for image
         />
       )}
       <div className="p-4">

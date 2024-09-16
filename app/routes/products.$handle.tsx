@@ -139,14 +139,16 @@ export default function Product() {
 
   return (
     <div className="product container mx-auto px-4 py-16 text-zinc-800 bg-zinc-100  ">
-      <div className='Wrapper max-w-7xl md:max-w-7xl'>
+      
+      <div className='Wrapper mx-auto max-w-7xl md:max-w-7xl'>
+      <BackArrow />
       <motion.div
           initial={{ y: 20 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.7 }}
           className='flex w-full justify-start'
         >
-          <BackArrow />
+          
       
         </motion.div>
       

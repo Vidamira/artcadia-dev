@@ -6,6 +6,7 @@ const imgs = [
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___2-Gross__Slider-_Artcadia.jpg?v=1720434305",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider-artcadia_ef120425-9b90-4a3a-bc06-1fe03a5ef8e0.jpg?v=1719568905",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slonem-slider-image.jpg?",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_jens_-ia.jpg?v=1720432258",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/110-Grafik___2-Gross__Slider-_Artcadia.jpg?v=1720452307",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_Cu.-1.jpg?v=1719569059",
@@ -15,7 +16,6 @@ const imgs = [
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide4.png?v=1724007350",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide6.png?v=1724007350",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide7.png?v=1724007350",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide8.png?v=1724007350",
 ];
 

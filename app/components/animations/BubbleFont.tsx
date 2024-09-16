@@ -34,7 +34,7 @@ const BubbleText = () => {
 
       span.addEventListener("mouseleave", function (this: typeof span) {
         this.style.fontWeight = "300";
-        this.style.color = "#ca3c03";
+        this.style.color = "#BB4745";
 
         const leftNeighbor = this.previousElementSibling as HTMLSpanElement;
         const rightNeighbor = this.nextElementSibling as HTMLSpanElement;

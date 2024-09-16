@@ -92,6 +92,7 @@ export function SearchForm({searchTerm}: {searchTerm: string}) {
   return (
     <Form method="get">
       <input
+        className="search-input w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
         defaultValue={searchTerm}
         name="q"
         placeholder="Search…"
@@ -99,7 +100,8 @@ export function SearchForm({searchTerm}: {searchTerm: string}) {
         type="search"
       />
       &nbsp;
-      <button type="submit">Search</button>
+      <button className="search-button ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+       type="submit">Search</button>
     </Form>
   );
 }
@@ -170,8 +172,9 @@ function SearchResultsProductsGrid({
             );
 
             return (
-              <div className="search-results-item" key={product.id}>
+              <div className="search-results-item flex flex-row p-2 mb-1 bg-zinc-900 text-white rounded-md shadow-md transition duration-300 hover:scale-105 ease-in-out" key={product.id}>
                 <Link
+                className='flex flex-row'
                   prefetch="intent"
                   to={`/products/${product.handle}${trackingParams}`}
                 >
@@ -182,10 +185,10 @@ function SearchResultsProductsGrid({
                       width={50}
                     />
                   )}
-                  <div>
-                    <p>{product.title}</p>
-                    <small>
-                      <Money data={product.variants.nodes[0].price} />
+                  <div className='px-5'>
+                    <p className='text-zinc-500 mb-2'>{product.title}</p>
+                    <small >
+                      <Money  data={product.variants.nodes[0].price} />
                     </small>
                   </div>
                 </Link>
@@ -344,7 +347,7 @@ export function PredictiveSearchResults() {
 
   return (
     <div className="predictive-search-results">
-      <div>
+      <div className='search-results-item '>
         {results.map(({type, items}) => (
           <PredictiveSearchResult
             goToSearchResult={goToSearchResult}
@@ -401,7 +404,7 @@ function PredictiveSearchResult({
   }&type=${pluralToSingularSearchType(type)}`;
 
   return (
-    <div className="predictive-search-result" key={type}>
+    <div className="predictive-search-result " key={type}>
       <Link prefetch="intent" to={categoryUrl} onClick={goToSearchResult}>
         <h5>{isSuggestions ? 'Suggestions' : type}</h5>
       </Link>
@@ -424,7 +427,7 @@ type SearchResultItemProps = Pick<SearchResultTypeProps, 'goToSearchResult'> & {
 
 function SearchResultItem({goToSearchResult, item}: SearchResultItemProps) {
   return (
-    <li className="predictive-search-result-item" key={item.id}>
+    <li className="predictive-search-result-item flex flex-row p-2 mb-1 bg-zinc-900 text-white rounded-md shadow-md transition duration-300 hover:scale-105 ease-in-out" key={item.id}>
       <Link onClick={goToSearchResult} to={item.url}>
         {item.image?.url && (
           <Image

@@ -12,10 +12,10 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
 
   return (
-    <div aria-labelledby="cart-summary" className={className}>
+    <div aria-labelledby="cart-summary" className="bg-zinc-200 rounded p-4 mt-4 min-w-2xs">
       <h4 className='text-zinc-900 font-bold pt-4'>Totals</h4>
       <dl className="cart-subtotal text-zinc-900 font-light">
-        <dt>Subtotal</dt>
+        
         <dd>
           {cart.cost?.subtotalAmount?.amount ? (
             <Money data={cart.cost?.subtotalAmount} />
@@ -25,8 +25,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
         </dd>
       </dl>
       <br />
-      <br />
-      <br />
+      
       <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
     </div>
   );
@@ -40,7 +39,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
         className="bg-zinc-900 text-zinc-100 px-4 py-2 rounded-md hover:bg-zinc-500 hover:text-zinc-100"
         onClick={() => window.location.href = checkoutUrl}
       >
-        Continue to Checkout &rarr;
+        Continue &rarr;
       </button>
     </div>
   );
