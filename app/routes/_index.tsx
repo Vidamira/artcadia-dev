@@ -3,17 +3,12 @@ import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Pagination, getPaginationVariables,Image} from '@shopify/hydrogen';
 import SwipeCarousel from '~/components/SwipeCarousel';
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Reveal from '~/components/animations/Reveal';
 import Features from "~/components/Features";
-import { FiArrowUpRight } from "react-icons/fi";
-import FeaturedCollection from '~/components/FeaturedCollection';
 import WelcomeGrid from '~/components/WelcomeGrid';
-import TextParallaxContent from '~/components/TextParallaxContent';
-import Slider from '~/components/Slider';
 import type {
-  FeaturedCollectionFragment,
-  RecommendedProductsQuery,
+ 
   CollectionFragment,
 } from 'storefrontapi.generated';
 
