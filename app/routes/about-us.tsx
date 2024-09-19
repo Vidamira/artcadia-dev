@@ -18,22 +18,6 @@ interface TeamMember {
 
 export default function AboutUs() {
 
-  const features = [
-    {
-      id: 1,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
-      subheading: "Your online connection to the art world",
-      heading: "About Artcadia",
-      customContent: {
-        heading: "The Team",
-        description: "Artcadia brings together a vibrant team of art enthusiasts and industry experts from our Berlin and Manhattan locations. We share a deep understanding of the global art scene and a dedication to connecting you with the perfect piece. Whether you're a seasoned collector or just beginning your journey, our team is here to guide you with personalized advice and exceptional service.",
-        buttonLabel: "Meet Our Team", // Optional: Link to a dedicated team page
-        buttonLink: "/team", // Replace with desired link (e.g., team page)
-      },
-    },
-    
-  ];
-
   const features2 = [
     
     {
@@ -119,8 +103,21 @@ export default function AboutUs() {
 
   return (
     <div className="container mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
-      <Features features={features} />
-
+      
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 pb-10 pt-10 md:grid-cols-12">
+        <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
+        The Team
+        </h2>
+        <div className="col-span-1 md:col-span-8">
+          <p className="mb-4 text-xl text-zinc-400 font-light md:text-2xl">
+          Artcadia brings together a vibrant team of art enthusiasts and industry experts from our Berlin and Manhattan locations. 
+          We share a deep understanding of the global art scene and a dedication to connecting you with the perfect piece. Whether 
+          seasoned collector or just beginning your journey, our team is here to guide you with personalized advice and exceptional service.
+          </p>
+          
+        
+        </div>
+      </div>
       {/* Team Grid Section */}
       <section className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-20 my-16 p-10">
         {teamMembers.map((member) => (

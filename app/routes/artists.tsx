@@ -119,7 +119,7 @@ export default function Artists() {
       
       {hasNextPage && (
         <div className="text-center mt-4">
-          {isLoading ? 'Loading More...' : ' '}  {/* Empty element for spacing */}
+          {isLoading ? 'Loading More...' : ' '}
         </div>
       )}
       
