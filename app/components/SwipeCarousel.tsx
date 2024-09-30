@@ -14,6 +14,7 @@ const imgs = [
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Blue_Ice_2023_Room.jpg?v=1726513327",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide4.png?v=1724007350",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide6.png?v=1724007350",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Aerial_2023_Room.jpg?v=1727355411",
 ];
 
 const ONE_SECOND = 1000;
