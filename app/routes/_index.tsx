@@ -142,7 +142,7 @@ export default function Homepage() {
       id: 2,
       imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/entracne-artcadiq.jpg?v=1727785206",
       subheading: "Artcadia delivers worldwide, bringing the world's finest art to your home.",
-      heading: "Events",
+      heading: "Exhibition",
       customContent: {
         heading: "Join Us for Artcadia Events",
         description: "Discover exciting art events hosted by Artcadia. From exhibitions and workshops to artist talks, our events offer unique opportunities to engage with the art community.",
