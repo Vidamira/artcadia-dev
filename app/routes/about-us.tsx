@@ -34,6 +34,18 @@ export default function AboutUs() {
     },
     {
       id: 2,
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
+      subheading: "Let's find the perfect piece for your space.",
+      heading: "Public Spaces",
+      customContent: {
+        heading: "Elevate Your Space with Artcadia",
+        description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
+        buttonLabel: "Read more",
+        buttonLink: "/public-spaces", // Replace with your desired link
+      },
+    },
+    {
+      id: 3,
       imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/IMG_4403.jpg?v=1724851959",
       subheading: "Artcadia delivers worldwide, bringing the world's finest art to your home.",
       heading: "Contact Us",

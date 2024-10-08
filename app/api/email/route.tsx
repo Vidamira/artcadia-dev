@@ -1,4 +1,3 @@
-import { type NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 
@@ -6,25 +5,18 @@ export async function POST(request: NextRequest) {
   const { email, name, message } = await request.json();
 
   const transport = nodemailer.createTransport({
-    service: 'gmail',
-    /* 
-      setting service as 'gmail' is same as providing these setings:
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true
-      If you want to use a different email provider other than gmail, you need to provide these manually.
-      Or you can go use these well known services and their settings at
-      https://github.com/nodemailer/nodemailer/blob/master/lib/well-known/services.json
-  */
+    host: 'secure.emailsrvr.com', // Replace with your IONOS SMTP server host
+    port: 465, // Use 465
+    secure: true,
     auth: {
-      user: process.env.MY_EMAIL,
-      pass: process.env.MY_PASSWORD,
+      user: process.env.MY_EMAIL, // Replace with your IONOS email address
+      pass: process.env.MY_PASSWORD, // Replace with your IONOS email password
     },
   });
 
   const mailOptions: Mail.Options = {
     from: process.env.MY_EMAIL,
-    to: process.env.MY_EMAIL,
+    to: process.env.MY_EMAIL, // Update to send to the actual recipient
     // cc: email, (uncomment this line if you want to send a copy to the sender)
     subject: `Message from ${name} (${email})`,
     text: message,
@@ -45,6 +37,7 @@ export async function POST(request: NextRequest) {
     await sendMailPromise();
     return NextResponse.json({ message: 'Email sent' });
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 500 });
+    console.error(err); // Log the actual error for debugging
+    return NextResponse.json({ error: 'Error sending email' }, { status: 500 });
   }
 }

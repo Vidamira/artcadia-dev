@@ -84,7 +84,7 @@ export default function Homepage() {
     
     {
       id: 1,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide2.png?v=1724007350",
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
       subheading: "Dream it, own it. Commission unique artworks tailored to your vision.", 
       heading: "Custom Art",
       customContent: {
@@ -96,7 +96,7 @@ export default function Homepage() {
     },
     {
       id: 2,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/IMG_4403.jpg?v=1724851959",
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/entracne-artcadiq.jpg?v=1727785206",
       subheading: "Artcadia delivers worldwide, bringing the world's finest art to your home.",
       heading: "Events",
       customContent: {
@@ -130,7 +130,7 @@ export default function Homepage() {
           </div>
         )}
       </Pagination>
-      <Features features={features} />
+      
       
       <Features features={features2} />
     </div>
