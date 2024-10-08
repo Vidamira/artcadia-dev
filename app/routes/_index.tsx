@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import Reveal from '~/components/animations/Reveal';
 import Features from "~/components/Features";
 import WelcomeGrid from '~/components/WelcomeGrid';
+import HomeCards from '~/components/HomeCards';
 import type {
  
   CollectionFragment,
@@ -64,6 +65,49 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const { collections } = useLoaderData<typeof loader>();
+
+  const cardData = [
+    {
+      id: 1,
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
+      subheading: "Let's find the perfect piece for your space.",
+      heading: "Public Spaces",
+      customContent: {
+        heading: "Elevate Your Space with Artcadia",
+        description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
+        buttonLabel: "Read more",
+        buttonLink: "/public-spaces", // Replace with your desired link
+      },
+    },
+
+    {
+      id: 2,
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
+      subheading: "Let's find the perfect piece for your space.",
+      heading: "Public Spaces",
+      customContent: {
+        heading: "Elevate Your Space with Artcadia",
+        description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
+        buttonLabel: "Read more",
+        buttonLink: "/public-spaces", // Replace with your desired link
+      },
+    },
+
+    {
+      id: 3,
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
+      subheading: "Let's find the perfect piece for your space.",
+      heading: "Public Spaces",
+      customContent: {
+        heading: "Elevate Your Space with Artcadia",
+        description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
+        buttonLabel: "Read more",
+        buttonLink: "/public-spaces", // Replace with your desired link
+      },
+    },
+    // ... other card data objects
+  ];
+
   const features = [
     {
       id: 1,
@@ -131,7 +175,7 @@ export default function Homepage() {
         )}
       </Pagination>
       
-      
+      <HomeCards cards={cardData} />
       <Features features={features2} />
     </div>
   );
