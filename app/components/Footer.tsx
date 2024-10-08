@@ -49,9 +49,13 @@ function FooterMenu({
 }) {
   return (
     <nav className="footer-menu flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between md:mx-7xl p-10" role="navigation">
-      <div className="w-20 h-20 mb-4 md:mb-0">
+      <div className="mb-4 md:mb-0">
         {/* Replace with your logo image */}
-        <img src="app\assets\artcadia-logo-white.svg" alt="Artcadia Gallery Logo" />
+        <img src="https://cdn.shopify.com/s/files/1/0644/6075/1013/files/artcadia-logo-white_3.png?v=1728390795" 
+             alt="Artcadia Gallery Logo" 
+             width="200"
+             
+        />
       </div>
       {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;

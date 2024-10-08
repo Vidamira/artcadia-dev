@@ -31,9 +31,11 @@ export function Header({
     <header className="header flex items-stretch justify-between px-4 md:px-8 py-2">
       <NavLink className="" prefetch="intent" to="/" end>
         <img
-          src="https://cdn.shopify.com/s/files/1/0644/6075/1013/files/artcadia-logo-white_2.png?v=1728389575" // Adjust file path if needed
+          src="https://cdn.shopify.com/s/files/1/0644/6075/1013/files/artcadia-logo-white_3.png?v=1728390799" // Adjust file path if needed
           alt="Artcadia Logo" // Add alt text for accessibility
-          className="h-12 w-auto w-max-30" // Adjust height and width as needed
+          width="300"
+          
+        // Adjust height and width as needed
         />
       </NavLink>
       <div className="flex space-x-4 items-center">
