@@ -69,7 +69,7 @@ export default function Homepage() {
   const cardData = [
     {
       id: 1,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/02bild_jeff-1_1.png?v=1728472408",
       subheading: "Let's find the perfect piece for your space.",
       heading: "Public Spaces",
       customContent: {
@@ -82,9 +82,9 @@ export default function Homepage() {
 
     {
       id: 2,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
       subheading: "Let's find the perfect piece for your space.",
-      heading: "Custom Art",
+      heading: "3D Exhibition",
       customContent: {
         heading: "Create Your Custom Artpiece",
         description: "Work with talented artists to design a one-of-a-kind artwork that perfectly complements your vision. Our custom art service ensures a personalized and memorable experience.",

@@ -23,7 +23,20 @@ const HomeCards: React.FC<CardProps> = ({ cards }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-8">
+    
+    <div className="p-8">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
+            <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
+              SERVICES
+            </h2>
+            <div className="col-span-1 md:col-span-8">
+              <p className="mb-4 text-xl text-zinc-400 font-light md:text-2xl">
+                At Artcadia, we offer more than just art. We aim to make your space feel like home, with our expertise, we help you plan and organize your space to make it fit for you.
+              </p>
+        
+            </div>
+     </div>
+     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">    
       {cards.map((card) => (
         <motion.div
           key={card.id}
@@ -39,11 +52,12 @@ const HomeCards: React.FC<CardProps> = ({ cards }) => {
             <p className="text-zinc-500 text-sm mb-2">{card.subheading}</p>
             <h3 className="text-lg font-semibold mb-2">{card.heading}</h3>
             {card.customContent && (
-              <p className="text-gray-700 mb-4">{card.customContent.description}</p>
+              <p className="text-zinc-500 mb-4">{card.customContent.description}</p>
             )}
           </div>
         </motion.div>
       ))}
+    </div>
     </div>
   );
 };
