@@ -84,76 +84,18 @@ export default function Homepage() {
       id: 2,
       imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
       subheading: "Let's find the perfect piece for your space.",
-      heading: "Public Spaces",
+      heading: "Custom Art",
       customContent: {
-        heading: "Elevate Your Space with Artcadia",
-        description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
+        heading: "Create Your Custom Artpiece",
+        description: "Work with talented artists to design a one-of-a-kind artwork that perfectly complements your vision. Our custom art service ensures a personalized and memorable experience.",
         buttonLabel: "Read more",
-        buttonLink: "/public-spaces", // Replace with your desired link
-      },
-    },
-
-    {
-      id: 3,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
-      subheading: "Let's find the perfect piece for your space.",
-      heading: "Public Spaces",
-      customContent: {
-        heading: "Elevate Your Space with Artcadia",
-        description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
-        buttonLabel: "Read more",
-        buttonLink: "/public-spaces", // Replace with your desired link
+        buttonLink: "https://art.kunstmatrix.com/apps/artspaces/dist/index.html?timestamp=1720601973336#/?external=true&uid=9442&exhibition=5924601", // Replace with your desired link
       },
     },
     // ... other card data objects
   ];
 
-  const features = [
-    {
-      id: 1,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide3.png?v=1724007350",
-      subheading: "Let's find the perfect piece for your space.",
-      heading: "Public Spaces",
-      customContent: {
-        heading: "Elevate Your Space with Artcadia",
-        description: "Find the perfect artwork to enhance your public space. Whether it's a hotel, restaurant, or office, our curated collections offer a wide range of styles and sizes to suit your unique needs.",
-        buttonLabel: "Read more",
-        buttonLink: "/public-spaces", // Replace with your desired link
-      },
-    },
-    
-  ];
-
-  const features2 = [
-    
-    {
-      id: 1,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
-      subheading: "Dream it, own it. Commission unique artworks tailored to your vision.", 
-      heading: "Custom Art",
-      customContent: {
-        heading: "Create Your Custom Artpiece",
-        description: "Work with talented artists to design a one-of-a-kind artwork that perfectly complements your vision. Our custom art service ensures a personalized and memorable experience.",
-        buttonLabel: "Virtual Gallery",
-        buttonLink: "https://art.kunstmatrix.com/apps/artspaces/dist/index.html?timestamp=1720601973336#/?external=true&uid=9442&exhibition=5924601", // Replace with your desired link
-      },
-    },
-    {
-      id: 2,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/entracne-artcadiq.jpg?v=1727785206",
-      subheading: "Artcadia delivers worldwide, bringing the world's finest art to your home.",
-      heading: "Exhibition",
-      customContent: {
-        heading: "Join Us for Artcadia Events",
-        description: "Discover exciting art events hosted by Artcadia. From exhibitions and workshops to artist talks, our events offer unique opportunities to engage with the art community.",
-        buttonLabel: "See Upcoming Events",
-        buttonLink: "/events", // Replace with your desired link
-      },
-    },
-    // ... other features
-  ];
-  // featured collection name 
-  const handle = 'abstract';
+  
 
   return (
     <div className="container mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
@@ -176,7 +118,7 @@ export default function Homepage() {
       </Pagination>
       
       <HomeCards cards={cardData} />
-      <Features features={features2} />
+      
     </div>
   );
 }

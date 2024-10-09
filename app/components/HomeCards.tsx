@@ -14,39 +14,37 @@ interface CardProps {
   };
 }
 
-const HomeCards: React.FC<CardProps> = ({ id, imgUrl, subheading, heading, customContent }) => {
+const HomeCards: React.FC<CardProps> = ({ cards }) => {
   const cardVariants = {
     initial: { opacity: 0 },
     animate: { opacity: 1, transition: { duration: 0.5 } },
     exit: { opacity: 0, transition: { duration: 0.3 } },
+    hover: { scale: 1.05, transition: { duration: 0.2, ease: "easeInOut" } },
   };
 
   return (
-    <motion.div
-      variants={cardVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      key={id}
-      className="w-full rounded-lg overflow-hidden shadow-md bg-white md:w-1/3"
-    >
-      <img src={imgUrl} alt={heading} className="w-full h-48 object-cover" />
-      <div className="p-4">
-        <p className="text-gray-500 text-sm mb-2">{subheading}</p>
-        <h3 className="text-lg font-semibold mb-2">{heading}</h3>
-        {customContent && (
-          <>
-            <p className="text-gray-700 mb-4">{customContent.description}</p>
-            <a
-              href={customContent.buttonLink}
-              className="inline-block px-4 py-2 text-sm font-medium text-center text-white bg-blue-500 hover:bg-blue-700 rounded-md shadow-sm"
-            >
-              {customContent.buttonLabel}
-            </a>
-          </>
-        )}
-      </div>
-    </motion.div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-8">
+      {cards.map((card) => (
+        <motion.div
+          key={card.id}
+          variants={cardVariants}
+          initial="initial"
+          animate="animate"
+          whileHover="hover"
+          className="w-full rounded-lg overflow-hidden shadow-md bg-zinc-900 text-zinc-100 cursor-pointer"
+          onClick={() => window.location.href = card.customContent?.buttonLink || ''}
+        >
+          <img src={card.imgUrl} alt={card.heading} className="w-full h-48 object-cover" />
+          <div className="p-4">
+            <p className="text-zinc-500 text-sm mb-2">{card.subheading}</p>
+            <h3 className="text-lg font-semibold mb-2">{card.heading}</h3>
+            {card.customContent && (
+              <p className="text-gray-700 mb-4">{card.customContent.description}</p>
+            )}
+          </div>
+        </motion.div>
+      ))}
+    </div>
   );
 };
 
