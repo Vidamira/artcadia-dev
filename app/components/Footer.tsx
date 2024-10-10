@@ -51,11 +51,18 @@ function FooterMenu({
     <nav className="footer-menu flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between md:mx-7xl p-10" role="navigation">
       <div className="mb-4 md:mb-0">
         {/* Replace with your logo image */}
-        <img src="https://cdn.shopify.com/s/files/1/0644/6075/1013/files/artcadia-logo-white_3.png?v=1728390795" 
+        <img src="https://cdn.shopify.com/s/files/1/0644/6075/1013/files/artcadia-logo-white_3.png?v=1728394107" 
              alt="Artcadia Gallery Logo" 
              width="200"
              
         />
+
+        <div className='flex-col mt-2'>
+          <h3 className=' text-zinc-100'></h3>
+          <p className='text-zinc-500'>Kurfürstendamm 215,D-10719 Berlin , Germany</p>
+          <p className='text-zinc-500'>info@artcadia-gallery.com</p>
+          <p className='text-zinc-500'>+49 30 2404 82 96</p>
+        </div>
       </div>
       {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
