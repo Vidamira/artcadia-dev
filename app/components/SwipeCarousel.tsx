@@ -4,6 +4,7 @@ import { motion, useMotionValue } from "framer-motion";
 const imgs = [
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/1000Grafik___Hunt-Slomen__Slider-_Artcadia-Wiederhergestellt.jpg?v=1727351740",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/2024Grafik___2-Gros__Slider-_Artcadia-Wiederhergestellt.jpg?v=1725450983",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/03Grafik___Gross__Slider_Perry_Burns_Kopie.jpg?v=1728647521",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___2-Gross__Slider-_Artcadia.jpg?v=1720434305",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Aerial_2023_Room.jpg?",
@@ -13,7 +14,7 @@ const imgs = [
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide1.png?v=1724007349",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Blue_Ice_2023_Room.jpg?v=1726513327",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide4.png?v=1724007350",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide6.png?v=1724007350",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/03Grafik___Gross__Slider_Eugenio_Cuttica-Atcadia.jpg?v=1728646266",
 ];
 
 const ONE_SECOND = 1000;

@@ -41,7 +41,7 @@ export default function AboutUs() {
     
     {
       id: 1,
-      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide2.png?v=1724007350",
+      imgUrl: "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/110-Grafik___2-Gross__Slider-_Artcadia_Kopie.jpg?v=1728646097",
       subheading: "",
       heading: "",
       customContent: {

@@ -147,6 +147,19 @@ export function HeaderMenu({
             About
           </FlipLink>
         </li>
+        <li>
+          <FlipLink
+            href={"/contact"}
+            className=""
+            end
+            onClick={closeAside}
+            prefetch="intent"
+            
+            to="/about-us" // Assuming your about us page path is '/about-us'
+          >
+            Contact
+          </FlipLink>
+        </li>
         
         {/* Rest of your menu items can be added here */}
       </ul>

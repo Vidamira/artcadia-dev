@@ -249,6 +249,7 @@ const COLLECTION_QUERY = `#graphql
       width
       height
     }
+    
       products(
         first: $first,
         last: $last,
