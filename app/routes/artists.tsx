@@ -1,151 +1,92 @@
 import React from 'react';
-import {useLoaderData, Link} from '@remix-run/react';
-import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Pagination, getPaginationVariables, Image} from '@shopify/hydrogen';
-import type {CollectionFragment} from 'storefrontapi.generated';
-import Reveal from '~/components/animations/Reveal';
+import { useLoaderData, Link } from '@remix-run/react';
+import { defer, type LoaderFunctionArgs } from '@shopify/remix-oxygen';
+import { getPaginationVariables, Image } from '@shopify/hydrogen';
+import type { CollectionFragment, Metafield } from 'storefrontapi.generated';
 
-const blacklistedCollectionHandles = ['architecture', 'abstract', 'slider', 'featured', 'paintings', 'figurative', 'portrait', 'photography', 'sculpture', 'landscapes', 'price-on-request', 'featured-artwork', 'the-team'];
+const blacklistedCollectionHandles = [
+  'architecture',
+  'abstract',
+  'slider',
+  'featured',
+  'paintings',
+  'figurative',
+  'portrait',
+  'photography',
+  'sculpture',
+  'landscapes',
+  'price-on-request',
+  'featured-artwork',
+  'the-team',
+];
 
 export async function loader(args: LoaderFunctionArgs) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
-  const criticalData = await loadCriticalData(args);
-
-  return defer({...deferredData, ...criticalData});
-}
-
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- */
-async function loadCriticalData({context, request}: LoaderFunctionArgs) {
-  const paginationVariables = getPaginationVariables(request, {
+  const paginationVariables = getPaginationVariables(args.request, {
     pageBy: 65,
   });
 
-  const [{collections}] = await Promise.all([
-    context.storefront.query(COLLECTIONS_QUERY, {
-      variables: paginationVariables,
-    }),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
+  const { collections } = await args.context.storefront.query(COLLECTIONS_QUERY, {
+    variables: paginationVariables,
+  });
 
-  return {collections};
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
-function loadDeferredData({context}: LoaderFunctionArgs) {
-  return {};
+  return defer({ collections });
 }
 
 export default function Artists() {
-  const { collections, hasNextPage, fetchNextPage } = useLoaderData<typeof loader>();
-  const [isLoadingMore, setIsLoadingMore] = React.useState(false);
+  const { collections } = useLoaderData<typeof loader>();
 
-  const observerRef = React.useRef(null);
+  // Ensure collections.nodes exists and is an array
+  const collectionNodes = Array.isArray(collections?.nodes) ? collections.nodes : [];
 
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting && hasNextPage && !isLoadingMore) {
-          setIsLoadingMore(true);
-          fetchNextPage().then(() => setIsLoadingMore(false));
-        }
-      },
-      { threshold: 0.5 } // Trigger fetch when 50% of element is visible
+  // Filter out blacklisted collections
+  const filteredCollections = collectionNodes.filter(
+    (collection) => !blacklistedCollectionHandles.includes(collection.handle)
+  );
+
+  // Group collections by artist type (using the metafield)
+  const groupedCollections = filteredCollections.reduce((acc: Record<string, CollectionFragment[]>, collection) => {
+    const artistTypeMetafield = collection.metafields?.find(
+      (mf: Metafield) => mf.key === 'artist_type'
     );
+    const artistType = artistTypeMetafield?.value || 'Unknown';
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
+    if (!acc[artistType]) {
+      acc[artistType] = [];
     }
-
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
-      }
-    };
-  }, [hasNextPage, fetchNextPage,   
- isLoadingMore]);
-
- React.useEffect(() => {
-  const handleScroll = async () => {
-    const { scrollHeight, scrollTop, clientHeight } = document.documentElement;
-    if (hasNextPage && scrollTop + clientHeight >= scrollHeight - 50) {
-      setIsLoadingMore(true);
-      await fetchNextPage();
-      setIsLoadingMore(false);
-    }
-  };
-
-  window.addEventListener('scroll', handleScroll);
-
-  return () => window.removeEventListener('scroll', handleScroll);   
-
-}, [hasNextPage, fetchNextPage]);
+    acc[artistType].push(collection);
+    return acc;
+  }, {});
 
   return (
     <div className="collections p-4 mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-20 pt-12 md:grid-cols-12">
         <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
-        Explore a World of Artistic Expression
+          Explore a World of Artistic Expression
         </h2>
         <div className="col-span-1 md:col-span-8">
           <p className="mb-4 text-xl text-zinc-400 font-light md:text-2xl">
-          Each of our artists offers a unique perspective and style, creating a 
-          gallery of truly one-of-a-kind pieces. From bold and abstract to delicate 
-          and intricate, there is something here for every art lover
+            Each of our artists offers a unique perspective and style, creating a
+            gallery of truly one-of-a-kind pieces. From bold and abstract to delicate
+            and intricate, there is something here for every art lover.
           </p>
-          
-        
         </div>
       </div>
-        
-      
 
-      <Pagination connection={collections}>
-  {({ nodes, isLoading, PreviousLink, NextLink }) => (
-    <div className="flex justify-between p-8">
-      
-    
-        <CollectionsGrid collections={nodes} />
-      
-      {hasNextPage && (
-        <div className="text-center mt-4">
-          {isLoading ? 'Loading More...' : ' '}
+      {/* Loop through each artist type and display collections */}
+      {Object.entries(groupedCollections).map(([artistType, collections]) => (
+        <div key={artistType} className="artist-group mb-8">
+          <h3 className="text-2xl font-semibold mb-4">{artistType}</h3>
+          <CollectionsGrid collections={collections} />
         </div>
-      )}
-      
-    </div>
-  )}
-</Pagination>
+      ))}
     </div>
   );
-  
 }
 
 function CollectionsGrid({ collections }: { collections: CollectionFragment[] }) {
-  const filteredCollections = collections.filter(
-    (collection) => !blacklistedCollectionHandles.includes(collection.handle)
-  );
-
-   // Sort filtered collections alphabetically by title
-   const sortedCollections = filteredCollections.sort((a, b) => {
-    const titleA = a.title.toLowerCase();
-    const titleB = b.title.toLowerCase();
-    return titleA.localeCompare(titleB);
-  });
-
   return (
     <div className="collections-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-      {sortedCollections.map((collection, index) => (
+      {collections.map((collection, index) => (
         <CollectionItem key={collection.id} collection={collection} index={index} />
       ))}
     </div>
@@ -153,30 +94,34 @@ function CollectionsGrid({ collections }: { collections: CollectionFragment[] })
 }
 
 function CollectionItem({ collection, index }: { collection: CollectionFragment; index: number }) {
+  const artistType = collection.metafields?.find((mf: Metafield) => mf.key === 'artist_type')?.value || 'Unknown';
+
   return (
-    
-    <Link className="collection-item group bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out" key={collection.id} to={`/collections/${collection.handle}`} prefetch="intent">
+    <Link
+      className="collection-item group bg-zinc-800 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105 ease-in-out"
+      key={collection.id}
+      to={`/collections/${collection.handle}`}
+      prefetch="intent"
+    >
       {collection?.image && (
         <Image
           alt={collection.image.altText || collection.title}
           aspectRatio="1/1"
           data={collection.image}
-          loading={index < 3 ? 'eager' : undefined}   
-
-          className="object-cover group-hover:opacity-75" // Hover styles for image
+          loading={index < 3 ? 'eager' : undefined}
+          className="object-cover group-hover:opacity-75"
         />
       )}
       <div className="p-4">
-        <h5 className="font-semibold text-zinc-100"> {collection.title}</h5>
-
-        {/* Truncate description to 50 characters and add ellipsis if needed */}
+        <h5 className="font-semibold text-zinc-100">{collection.title}</h5>
+        {/* Display the artist_type tag */}
+        <div className="mt-2 text-sm text-zinc-400 bg-zinc-700 inline-block px-2 py-1 rounded-full">
+          {artistType}
+        </div>
       </div>
     </Link>
-    
   );
 }
-
-
 
 const COLLECTIONS_QUERY = `#graphql
   fragment Collection on Collection {
@@ -189,6 +134,10 @@ const COLLECTIONS_QUERY = `#graphql
       altText
       width
       height
+    }
+    metafields(identifiers: [{namespace: "custom", key: "artist_type"}]) {
+      key
+      value
     }
   }
   query StoreCollections2(
@@ -213,8 +162,7 @@ const COLLECTIONS_QUERY = `#graphql
         hasPreviousPage
         startCursor
         endCursor
-
       }
     }
-}
+  }
 ` as const;
