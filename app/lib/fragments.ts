@@ -129,6 +129,36 @@ const MENU_FRAGMENT = `#graphql
   }
 ` as const;
 
+export const FEATURED_COLLECTION_QUERY = `#graphql
+  query GetFeaturedCollection {
+    collection(handle: "Featured") {
+      title
+      description  # Add this to fetch the collection description
+      products(first: 10) {  # Fetch the products
+        edges {
+          node {
+            id
+            title
+            handle
+            variants(first: 1) {
+              edges {
+                node {
+                  id
+                  image {
+                    url
+                    altText
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+
 export const HEADER_QUERY = `#graphql
   fragment Shop on Shop {
     id

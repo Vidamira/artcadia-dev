@@ -1,63 +1,25 @@
-import { useClient, useQuery } from '@shopify/hydrogen';
-import { gql } from '@apollo/client/core';
+import { json, LoaderFunction } from '@remix-run/node';
+import { useLoaderData } from '@remix-run/react';
+import { Collection, Product } from '@shopify/hydrogen/storefront-api-types';
 
-interface Product {
-  id: string;
-  title: string;
-  handle: string;
-  description: string;
-  images: {
-    edges: {
-      node: {
-        url: string;
-        altText: string;
-      };
-    }[];
-  };
-  variants: {
-    edges: {
-      node: {
-        price: number;
-        compareAtPrice: number | null;
-      };
-    }[];
-  };
-}
-
-interface CollectionData {
-  collectionByHandle: {
-    products: {
-      edges: {
-        node: Product;
-      }[];
-    };
-  };
-}
-
-const FEATURED_COLLECTION_QUERY = gql`
-  query {
-    collectionByHandle(handle: "featured") {
-      products(first: 10) {
-        edges {
-          node {
-            id
-            title
-            handle
-            description
-            images(first: 1) {
-              edges {
-                node {
-                  url
-                  altText
-                }
-              }
-            }
-            variants(first: 1) {
-              edges {
-                node {
-                  price
-                  compareAtPrice
-                }
+const COLLECTION_BY_HANDLE_QUERY = `
+  query CollectionByHandle($handle: String!) {
+    collection(handle: $handle) {
+      title
+      products(first: 8) {
+        nodes {
+          id
+          title
+          handle
+          featuredImage {
+            url
+            altText
+          }
+          variants(first: 1) {
+            nodes {
+              priceV2 {
+                amount
+                currencyCode
               }
             }
           }
@@ -67,32 +29,58 @@ const FEATURED_COLLECTION_QUERY = gql`
   }
 `;
 
-function FeaturedCollection() {
-  const client = useClient();
-  const { data, loading, error } = useQuery<CollectionData>(FEATURED_COLLECTION_QUERY, { client });
-  
-  interface ProductEdge {
-    node: Product;
+export const loader: LoaderFunction = async ({ context }) => {
+  const { storefront } = context;
+  const handle = 'featured';
+
+  const { data } = await storefront.query(COLLECTION_BY_HANDLE_QUERY, {
+    variables: { handle },
+  });
+
+  if (!data?.collection) {
+    throw new Response('Collection not found', { status: 404 });
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  return json({ collection: data.collection });
+};
+
+export function FeaturedCollection() {
+  const { collection } = useLoaderData<{ collection: Collection }>();
+
+  if (!collection) {
+    return <p>Collection not found.</p>;
+  }
 
   return (
-    <div>
-      {data.collectionByHandle.products.edges.map((productEdge) => {
-        const product = productEdge.node;
-        return (
-          <div key={product.id}>
-            <h3>{product.title}</h3>
-            <img src={product.images.edges[0].node.url} alt={product.images.edges[0].node.altText} />
-            <p>{product.description}</p>
-            <p>Price: ${product.variants.edges[0].node.price}</p>
-          </div>
-        );
-      })}
+    <div className="bg-zinc-950 text-zinc-100 p-8">
+      <h2 className="text-3xl font-bold mb-6">{collection.title}</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {collection.products.nodes.map((product: Product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
     </div>
   );
 }
 
-export default FeaturedCollection;
+function ProductCard({ product }: { product: Product }) {
+  const { priceV2: price } = product.variants.nodes[0];
+
+  return (
+    <a href={`/products/${product.handle}`} className="group">
+      <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-zinc-800">
+        {product.featuredImage && (
+          <img
+            src={product.featuredImage.url}
+            alt={product.featuredImage.altText || product.title}
+            className="h-full w-full object-cover object-center group-hover:opacity-75"
+          />
+        )}
+      </div>
+      <h3 className="mt-4 text-sm text-zinc-300">{product.title}</h3>
+      <p className="mt-1 text-lg font-medium text-zinc-100">
+        {price.amount} {price.currencyCode}
+      </p>
+    </a>
+  );
+}

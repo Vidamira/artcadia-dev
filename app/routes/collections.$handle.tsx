@@ -11,6 +11,7 @@ import type {ProductItemFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import { motion } from 'framer-motion';
 import BackArrow from '~/components/BackArrow';
+import {FeaturedCollection} from '~/components/FeaturedCollection';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
