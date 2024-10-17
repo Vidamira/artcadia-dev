@@ -1,7 +1,8 @@
-import {Suspense} from 'react';
-import {Await, NavLink} from '@remix-run/react';
-import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import { Suspense } from 'react';
+import { Await, NavLink } from '@remix-run/react';
+import type { FooterQuery, HeaderQuery } from 'storefrontapi.generated';
 import { motion } from 'framer-motion';
+import { FaInstagram, FaFacebookF, FaLinkedinIn } from 'react-icons/fa';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -40,7 +41,7 @@ export function Footer({
 
 function FooterMenu({
   menu,
-  primaryDomainUrl, 
+  primaryDomainUrl,
   publicStoreDomain,
 }: {
   menu: FooterQuery['menu'];
@@ -48,48 +49,66 @@ function FooterMenu({
   publicStoreDomain: string;
 }) {
   return (
-    <nav className="footer-menu flex flex-col items-center gap-4 md:flex-row md:items-stretch md:justify-between md:mx-7xl p-10" role="navigation">
+    <nav className="footer-menu grid grid-cols-1 gap-4 md:grid-cols-3 items-start md:gap-8 p-10" role="navigation">
+      {/* Logo and address block */}
       <div className="mb-4 md:mb-0">
-        {/* Replace with your logo image */}
-        <img src="https://cdn.shopify.com/s/files/1/0644/6075/1013/files/artcadia-logo-white_3.png?v=1728394107" 
-             alt="Artcadia Gallery Logo" 
-             width="200"
-             
+        <img src="https://cdn.shopify.com/s/files/1/0644/6075/1013/files/artcadia-logo-white_3.png?v=1728394107"
+          alt="Artcadia Gallery Logo"
+          width="200"
         />
-
-        <div className='flex-col mt-2'>
-          <h3 className=' text-zinc-100'></h3>
-          <p className='text-zinc-500'>Kurfürstendamm 215,D-10719 Berlin , Germany</p>
-          <p className='text-zinc-500'>info@artcadia-gallery.com</p>
-          <p className='text-zinc-500'>+49 30 2404 82 96</p>
+        <div className="flex-col mt-2">
+          <p className="text-zinc-500">Kurfürstendamm 215, D-10719 Berlin, Germany</p>
+          <p className="text-zinc-500">info@artcadia-gallery.com</p>
+          <p className="text-zinc-500">+49 30 2404 82 96</p>
         </div>
       </div>
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
+
+      {/* Footer links */}
+      <div className="footer-links flex flex-col items-center md:items-start">
+        {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
+          if (!item.url || item.title === "Search") return null;
+
+          const url =
+            item.url.includes('myshopify.com') ||
+            item.url.includes(publicStoreDomain) ||
+            item.url.includes(primaryDomainUrl)
+              ? new URL(item.url).pathname
+              : item.url;
+          const isExternal = !url.startsWith('/');
+          return isExternal ? (
+            <a href={url} key={item.id} rel="noopener noreferrer" target="_blank" className="hover:underline mb-2">
+              {item.title}
+            </a>
+          ) : (
+            <NavLink
+              end
+              key={item.id}
+              prefetch="intent"
+              style={activeLinkStyle}
+              to={url}
+              className="hover:underline mb-2"
+            >
+              {item.title}
+            </NavLink>
+          );
+        })}
+      </div>
+
+      {/* Social Media Links placed under Privacy Policy and Imprint */}
+      <div className="social-media flex flex-col items-center md:items-start">
+        <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
+        <div className="flex gap-6">
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="text-zinc-100 hover:text-zinc-400">
+            <FaInstagram size={24} />
           </a>
-        ) : (
-          <NavLink
-            end 
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-zinc-100 hover:text-zinc-400">
+            <FaFacebookF size={24} />
+          </a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-zinc-100 hover:text-zinc-400">
+            <FaLinkedinIn size={24} />
+          </a>
+        </div>
+      </div>
     </nav>
   );
 }

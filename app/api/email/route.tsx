@@ -1,43 +1,45 @@
 import nodemailer from 'nodemailer';
-import Mail from 'nodemailer/lib/mailer';
+import { NextRequest, NextResponse } from 'next/server'; // Adjust based on your framework
 
 export async function POST(request: NextRequest) {
-  const { email, name, message } = await request.json();
+  try {
+    const { email, message, cartSummary } = await request.json();
 
-  const transport = nodemailer.createTransport({
-    host: 'secure.emailsrvr.com', // Replace with your IONOS SMTP server host
-    port: 465, // Use 465
-    secure: true,
-    auth: {
-      user: process.env.MY_EMAIL, // Replace with your IONOS email address
-      pass: process.env.MY_PASSWORD, // Replace with your IONOS email password
-    },
-  });
-
-  const mailOptions: Mail.Options = {
-    from: process.env.MY_EMAIL,
-    to: process.env.MY_EMAIL, // Update to send to the actual recipient
-    // cc: email, (uncomment this line if you want to send a copy to the sender)
-    subject: `Message from ${name} (${email})`,
-    text: message,
-  };
-
-  const sendMailPromise = () =>
-    new Promise<string>((resolve, reject) => {
-      transport.sendMail(mailOptions, function (err) {
-        if (!err) {
-          resolve('Email sent');
-        } else {
-          reject(err.message);
-        }
-      });
+    const transporter = nodemailer.createTransport({
+      host: 'secure.emailsrvr.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.MY_EMAIL,
+        pass: process.env.MY_PASSWORD,
+      },
     });
 
-  try {
-    await sendMailPromise();
-    return NextResponse.json({ message: 'Email sent' });
-  } catch (err) {
-    console.error(err); // Log the actual error for debugging
-    return NextResponse.json({ error: 'Error sending email' }, { status: 500 });
+    const cartDetails = cartSummary.map((item: any) => `
+      <li>
+        <strong>${item.productTitle}</strong> (${item.variantTitle})<br />
+        Quantity: ${item.quantity}, Price: €${item.price}
+      </li>
+    `).join('');
+
+    const mailOptions = {
+      from: process.env.MY_EMAIL,
+      to: process.env.MY_EMAIL, // This is where the email will be sent (your email)
+      subject: `New Cart Inquiry from ${email}`,
+      html: `
+        <h2>New Cart Inquiry</h2>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong> ${message}</p>
+        <h3>Cart Summary:</h3>
+        <ul>${cartDetails}</ul>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return NextResponse.json({ message: 'Email sent successfully!' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
   }
 }
