@@ -2,19 +2,20 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
 const imgs = [
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/1000Grafik___Hunt-Slomen__Slider-_Artcadia-Wiederhergestellt.jpg?v=1727351740",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/2024Grafik___2-Gros__Slider-_Artcadia-Wiederhergestellt.jpg?v=1725450983",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/03Grafik___Gross__Slider_Perry_Burns_Kopie.jpg?v=1728647521",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___2-Gross__Slider-_Artcadia.jpg?v=1720434305",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide5.png?v=1724007350",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Aerial_2023_Room.jpg?",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_jens_-ia.jpg?v=1720432258",  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_Cu.-1.jpg?v=1719569059",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_Atcadia_1b1c58c9-3400-48e8-9252-22de5fb4e3e8.jpg?v=1720432221",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Grafik___Gross__Slider_ZHUORAN_Atcadia-1.jpg?v=1719585170",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide1.png?v=1724007349",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Blue_Ice_2023_Room.jpg?v=1726513327",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slide4.png?v=1724007350",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/03Grafik___Gross__Slider_Eugenio_Cuttica-Atcadia.jpg?v=1728646266",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-hunt-slonem.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-perry-burns.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-sebastian-wehrle.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-eugenio-cuttica.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-isadora-capraro.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-kurt-giehl.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-jens-wittig.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-eugenio-cuttica-2.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-magdalena-maatkare",  
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-lautaro-cuttica.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-christine-matthai.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-kurt-giehl-2.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-Huang-Zhuoran.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/silder-image-heiko-hellwig.jpg",
 ];
 
 const ONE_SECOND = 1000;

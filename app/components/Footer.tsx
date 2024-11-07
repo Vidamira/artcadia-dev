@@ -59,7 +59,6 @@ function FooterMenu({
         <div className="flex-col mt-2">
           <p className="text-zinc-500">Kurfürstendamm 215, D-10719 Berlin, Germany</p>
           <p className="text-zinc-500">info@artcadia-gallery.com</p>
-          <p className="text-zinc-500">+49 30 2404 82 96</p>
         </div>
       </div>
 
@@ -98,10 +97,10 @@ function FooterMenu({
       <div className="social-media flex flex-col items-center md:items-start">
         <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
         <div className="flex gap-6">
-          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="text-zinc-100 hover:text-zinc-400">
+          <a href="https://www.instagram.com/artcadia_gallery/" target="_blank" rel="noopener noreferrer" className="text-zinc-100 hover:text-zinc-400">
             <FaInstagram size={24} />
           </a>
-          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-zinc-100 hover:text-zinc-400">
+          <a href="https://www.facebook.com/profile.php?id=100069652207242" target="_blank" rel="noopener noreferrer" className="text-zinc-100 hover:text-zinc-400">
             <FaFacebookF size={24} />
           </a>
           <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-zinc-100 hover:text-zinc-400">
