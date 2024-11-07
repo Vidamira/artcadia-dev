@@ -2,20 +2,14 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
 const imgs = [
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-hunt-slonem.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-perry-burns.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-sebastian-wehrle.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-eugenio-cuttica.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-isadora-capraro.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-kurt-giehl.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-jens-wittig.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-eugenio-cuttica-2.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-magdalena-maatkare",  
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-lautaro-cuttica.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-christine-matthai.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-kurt-giehl-2.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/slider-image-Huang-Zhuoran.jpg",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/silder-image-heiko-hellwig.jpg",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_112.png?v=1730978976",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_98.png?v=1730978975",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_102.png?v=1730978976",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_106.png?v=1730978975",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_100.png?v=1730978975",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_110.png?v=1730978975",
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_114.png?v=1730978975",
+  
 ];
 
 const ONE_SECOND = 1000;

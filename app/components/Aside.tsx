@@ -1,5 +1,4 @@
 import { createContext, type ReactNode, useContext, useState, useRef, useEffect } from 'react';
-import onClickOutside from 'react-onclickoutside';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -8,16 +7,6 @@ type AsideContextValue = {
   close: () => void;
 };
 
-/**
- * A side bar component with Overlay
- * @example
- * ```jsx
- * <Aside type="search" heading="SEARCH">
- *  <input type="search" />
- *  ...
- * </Aside>
- * ```
- */
 export function Aside({
   children,
   heading,
@@ -41,7 +30,6 @@ export function Aside({
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside); 
-
     };
   }, []);
 
@@ -54,9 +42,10 @@ export function Aside({
       role="dialog"
     >
       <div
-        className={`absolute top-0 right-0 w-90 h-full bg-white shadow-md p-6 transition-transform duration-300 ${
+        className={`absolute top-0 right-0 w-90 h-full bg-white shadow-md p-6 transition-transform duration-300 flex flex-col ${
           expanded ? 'translate-x-0' : 'translate-x-full'
-        }`} // Add transition and transform classes
+        }`}
+        ref={overlayRef}
       >
         <button
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-5xl"
@@ -65,14 +54,13 @@ export function Aside({
           &times;
         </button>
         
+        <h2 className="text-2xl font-semibold mb-4">{heading}</h2>
+        
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
   );
 }
-
-// ... rest of the Aside component
-
 
 const AsideContext = createContext<AsideContextValue | null>(null);
 

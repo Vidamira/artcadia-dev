@@ -22,7 +22,31 @@ export function CartSummary({ cart, layout }: CartSummaryProps) {
         </dd>
       </dl>
       <br />
+      <div className="max-h-60 overflow-y-auto"> {/* Scrollable container for cart items */}
+        <CartItems cart={cart} />
+      </div>
       <CartCheckoutActions cart={cart} />
+    </div>
+  );
+}
+
+function CartItems({ cart }: { cart: OptimisticCart<CartApiQueryFragment | null> }) {
+  return (
+    <div>
+      {cart.lines.nodes.map((item, index) => (
+        <div key={index} className="flex items-start mb-4 text-zinc-900">
+          <img
+            src={item.merchandise.image?.url}
+            alt={item.merchandise.product.title}
+            className="w-16 h-16 object-cover rounded mr-4"
+          />
+          <div>
+            <strong>{item.merchandise.product.title}</strong> <br />
+            <span className="text-sm text-zinc-400">{item.merchandise.title} (Qty: {item.quantity})</span> <br />
+            <span className="text-sm text-zinc-800">€{item.cost.totalAmount.amount}</span>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -112,7 +136,7 @@ function ContactForm({ cart }: { cart: OptimisticCart<CartApiQueryFragment | nul
           rows={4}
         />
       </div>
-      <div className="mb-6">
+      <div className="mb-6 max-h-60 overflow-y-auto">
         <label className="block text-zinc-100 font-semibold mb-2">Cart Summary:</label>
         {cartSummary.map((item, index) => (
           <div key={index} className="mb-4 flex items-start text-zinc-100">

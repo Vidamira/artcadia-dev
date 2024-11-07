@@ -20,19 +20,12 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 };
 
 export async function loader(args: LoaderFunctionArgs) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
   return defer({...deferredData, ...criticalData});
 }
 
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- */
 async function loadCriticalData({
   context,
   params,
@@ -49,7 +42,6 @@ async function loadCriticalData({
     storefront.query(PRODUCT_QUERY, {
       variables: {handle, selectedOptions: getSelectedProductOptions(request)},
     }),
-    // Add other queries here, so that they are loaded in parallel
   ]);
 
   if (!product?.id) {
@@ -67,8 +59,6 @@ async function loadCriticalData({
   if (firstVariantIsDefault) {
     product.selectedVariant = firstVariant;
   } else {
-    // if no selected variant was returned from the selected options,
-    // we redirect to the first variant's url with it's selected options applied
     if (!product.selectedVariant) {
       throw redirectToFirstVariant({product, request});
     }
@@ -79,23 +69,12 @@ async function loadCriticalData({
   };
 }
 
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
 function loadDeferredData({context, params}: LoaderFunctionArgs) {
-  // In order to show which variants are available in the UI, we need to query
-  // all of them. But there might be a *lot*, so instead separate the variants
-  // into it's own separate query that is deferred. So there's a brief moment
-  // where variant options might show as available when they're not, but after
-  // this deffered query resolves, the UI will update.
   const variants = context.storefront
     .query(VARIANTS_QUERY, {
       variables: {handle: params.handle!},
     })
     .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
       console.error(error);
       return null;
     });
@@ -138,91 +117,70 @@ export default function Product() {
   const { title, descriptionHtml } = product;
 
   return (
-    <div className="product container mx-auto px-4 py-16 text-zinc-800 bg-zinc-100  ">
-      
-      <div className='Wrapper mx-auto max-w-7xl md:max-w-7xl'>
-      <BackArrow />
-      <motion.div
-          initial={{ y: 20 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.7 }}
-          className='flex w-full justify-start'
-        >
-          
-      
-        </motion.div>
-      
-      <div className="grid mx-auto  grid-cols-1 md:grid-cols-2 gap-8">
-      
-        <motion.div
-          initial={{ y: 20 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.7 }}
-          className='rounded'
-        >
-          <ProductImage image={selectedVariant?.image}  />
-        </motion.div>
-
-        
-        <div className="product-main">
-          
+    <div className="product container mx-auto px-4 py-16 text-zinc-800 bg-zinc-100">
+      <div className="Wrapper mx-auto max-w-7xl">
+        <BackArrow />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
           <motion.div
-            className="bg-zinc-100 p-4 rounded-lg shadow-md" // Add styling classes
             initial={{ y: 20 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.7 }}
+            className="rounded"
           >
-            <a href={`/collections/${String(product.vendor)?.toLowerCase().replace(/\s+/g, '-')}`} className="text-zinc-800">
-            {product.vendor}
-            </a>
-            <h1 className="text-4xl font-bold text-zinc-800">{title}</h1>
-            <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+            <ProductImage image={selectedVariant?.image} />
           </motion.div>
-
-          <motion.div
-            className="bg-zinc-100 p-4 rounded-lg shadow-md flex justify-between mt-10" // Add styling classes
-            initial={{ y: 20 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className='flex-row'>
-              <strong>
+          <div className="product-main">
+            <motion.div
+              className="bg-zinc-100 p-6 rounded-lg shadow-md"
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              <a href={`/collections/${String(product.vendor)?.toLowerCase().replace(/\s+/g, '-')}`} className="text-zinc-600">
+                {product.vendor}
+              </a>
+              <h1 className="text-3xl md:text-4xl font-bold text-zinc-800 mt-2">{title}</h1>
+              <div className="text-zinc-700 mt-4" dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+            </motion.div>
+            <motion.div
+              className="bg-zinc-100 p-6 rounded-lg shadow-md mt-8 flex flex-col items-start"
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
               <ProductPrice
                 price={selectedVariant?.price}
                 compareAtPrice={selectedVariant?.compareAtPrice}
               />
-              
-              </strong>
-              <p>Add your desired artworks to your cart and we'll create a custom order for you. You'll receive a confirmation email with pricing and lead times.</p>
+              <p className="text-zinc-600 mt-4">
+                Add your desired artworks to your cart, and we'll create a custom order for you.
+              </p>
               <Suspense
-            fallback={
-              <ProductForm
-                product={product}
-                selectedVariant={selectedVariant}
-                variants={[]}
-              />
-            }
-          >
-            <Await
-              errorElement="There was a problem loading product variants"
-              resolve={variants}
-            >
-              {(data) => (
-                <ProductForm 
-                  product={product}
-                  selectedVariant={selectedVariant}
-                  variants={data?.product?.variants.nodes || []}
-                />
-              )}
-            </Await>
-          </Suspense>
-            </div>  
-            
-          
-          </motion.div>
-
-          
-          
+                fallback={
+                  <ProductForm
+                    product={product}
+                    selectedVariant={selectedVariant}
+                    buttonText="Request Information" // Change the button text
+                    variants={[]}
+                  />
+                }
+              >
+                <Await
+                  errorElement="There was a problem loading product variants"
+                  resolve={variants}
+                >
+                  {(data) => (
+                    <ProductForm
+                      product={product}
+                      selectedVariant={selectedVariant}
+                      buttonText="Request Information" // Change the button text here as well
+                      variants={data?.product?.variants.nodes || []}
+                    />
+                  )}
+                </Await>
+              </Suspense>
+            </motion.div>
+          </div>
         </div>
       </div>
       <Analytics.ProductView
@@ -240,11 +198,10 @@ export default function Product() {
           ],
         }}
       />
-      </div>
-      
     </div>
   );
 }
+
 
 
 
