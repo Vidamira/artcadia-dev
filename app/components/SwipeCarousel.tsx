@@ -2,18 +2,36 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
 
 const imgs = [
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_125.png?v=1730987321",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_98.png?v=1730978975",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_102.png?v=1730978976",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_100.png?v=1730978975",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_110.png?v=1730978975",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_114.png?v=1730978975",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_122.png?v=1730986815",
-
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_124.png?v=1730986816",
+  //hunt slonem
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_118.png?v=1730986816",
+  //isadora caprao
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_122.png?v=1730986815",
+  //kurt giehl
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_116.png?v=1730986816",
+  //lautaro cuttica
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_114.png?v=1730978975",
+  //jens c wittig
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_125.png?v=1730987321",
+  //magdalena
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_98.png?v=1730978975",
+  //perry burns
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_120.png?v=1730986817",
+  //christine matthai
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_100.png?v=1730978975",
+  //eugenio cuttica
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_102.png?v=1730978976",
+   //sebastian wehrle
+   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_124.png?v=1730986816",
+  //heiko hellwig
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_126.png?v=1730989506",
+  //cuttica
+  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_104.png?v=1730978976",
+  
+  
+ 
+  
+  
+  
   
 ];
 
