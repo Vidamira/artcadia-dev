@@ -59,7 +59,7 @@ export default function Artists() {
 
   return (
     <div className="collections p-4 mx-auto max-w-7xl bg-zinc-950 text-zinc-100">
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-20 pt-12 md:grid-cols-12">
+      <div className="mx-auto grid grid-cols-1 gap-8 pb-20 pt-12 md:grid-cols-12">
         <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
           Explore a World of Artistic Expression
         </h2>

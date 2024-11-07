@@ -1,7 +1,7 @@
 import CollectionDisplay from '~/components/CollectionDisplay';
 import { defer, type LoaderFunctionArgs } from '@shopify/remix-oxygen';
 import { Await, useLoaderData, Link, type MetaFunction } from '@remix-run/react';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { Pagination, getPaginationVariables, Image } from '@shopify/hydrogen';
 import SwipeCarousel from '~/components/SwipeCarousel';
 import { motion } from "framer-motion";
@@ -9,6 +9,7 @@ import Reveal from '~/components/animations/Reveal';
 import WelcomeGrid from '~/components/WelcomeGrid';
 import HomeCards from '~/components/HomeCards';
 import type { CollectionFragment, ProductItemFragment } from 'storefrontapi.generated';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 export const meta: MetaFunction = () => {
   return [{ title: 'Hydrogen | Home' }];
@@ -103,6 +104,18 @@ export default function Homepage() {
         </Await>
       </Suspense>
 
+      <div className="mx-auto grid grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
+            <h2 className="col-span-1 text-3xl font-bold md:col-span-4">
+              CATEGORIES
+            </h2>
+            <div className="col-span-1 md:col-span-8">
+              <p className="mb-4 text-xl text-zinc-400 font-light md:text-2xl">
+                At Artcadia, we offer more than just art. We aim to make your space feel like home, with our expertise, we help you plan and organize your space to make it fit for you.
+              </p>
+        
+            </div>
+     </div>
+
       <Pagination connection={collections}>
         {({ nodes, isLoading, PreviousLink, NextLink }) => (
           <div className="flex justify-between p-8">
@@ -119,26 +132,63 @@ export default function Homepage() {
 }
 
 // Updated ProductsGrid for featured products
+
 function ProductsGridFeature({ products }: { products: ProductItemFragment[] }) {
+  const visibleProducts = 3; // Number of products visible at a time
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    if (currentIndex < products.length - visibleProducts) {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
+
   return (
-    <motion.div
-      className="flex overflow-x-auto space-x-4 p-4"
-      whileTap={{ cursor: "grabbing" }} // Adding grab effect on tap
-    >
-      {products.map((product, index) => (
-        <motion.div
-          key={product.id}
-          className="min-w-[300px] flex-shrink-0 bg-zinc-900 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }} // Add a slight delay for each product
+    <div className="relative overflow-hidden p-4">
+      <motion.div
+        className="flex space-x-4"
+        animate={{ x: -currentIndex * 300 }} // Adjust 300px based on product width
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      >
+        {products.map((product) => (
+          <div
+            key={product.id}
+            className="min-w-[300px] bg-zinc-900 text-zinc-100 rounded overflow-hidden shadow-md transition duration-300 hover:scale-105"
+          >
+            <ProductItemFeature product={product} />
+          </div>
+        ))}
+      </motion.div>
+
+      {/* Buttons container positioned below the product grid and aligned to the right */}
+      <div className="flex justify-end mt-4 space-x-2">
+        <button
+          onClick={handlePrevious}
+          disabled={currentIndex === 0}
+          className="bg-zinc-800 text-zinc-100 p-2 rounded disabled:opacity-50"
         >
-          <ProductItemFeature product={product} />
-        </motion.div>
-      ))}
-    </motion.div>
+          <ChevronLeftIcon className="h-5 w-5" />
+        </button>
+        <button
+          onClick={handleNext}
+          disabled={currentIndex >= products.length - visibleProducts}
+          className="bg-zinc-800 text-zinc-100 p-2 rounded disabled:opacity-50"
+        >
+          <ChevronRightIcon className="h-5 w-5" />
+        </button>
+      </div>
+    </div>
   );
 }
+
+
+
 
 
 // Updated ProductItem for featured products
