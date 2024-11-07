@@ -5,7 +5,6 @@ const imgs = [
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_112.png?v=1730978976",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_98.png?v=1730978975",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_102.png?v=1730978976",
-  "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_106.png?v=1730978975",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_100.png?v=1730978975",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_110.png?v=1730978975",
   "https://cdn.shopify.com/s/files/1/0644/6075/1013/files/Group_114.png?v=1730978975",

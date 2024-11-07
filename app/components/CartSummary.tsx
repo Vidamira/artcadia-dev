@@ -22,9 +22,7 @@ export function CartSummary({ cart, layout }: CartSummaryProps) {
         </dd>
       </dl>
       <br />
-      <div className="max-h-60 overflow-y-auto"> {/* Scrollable container for cart items */}
-        <CartItems cart={cart} />
-      </div>
+      <CartItems cart={cart} />
       <CartCheckoutActions cart={cart} />
     </div>
   );
@@ -59,16 +57,19 @@ function CartCheckoutActions({ cart }: { cart: OptimisticCart<CartApiQueryFragme
   };
 
   return (
-    <div>
+    <div className="mt-4">
       {!showForm ? (
         <button
-          className="bg-zinc-900 text-zinc-100 px-4 py-2 rounded-md hover:bg-zinc-500 hover:text-zinc-100"
+          className="bg-zinc-900 text-zinc-100 px-4 py-2 rounded-md hover:bg-zinc-500 hover:text-zinc-100 transition-all"
           onClick={handleOpenForm}
         >
           Continue &rarr;
         </button>
       ) : (
-        <ContactForm cart={cart} />
+        <div>
+          <p className="text-zinc-900 mb-4">Please fill out the form below to send an inquiry:</p>
+          <ContactForm cart={cart} />
+        </div>
       )}
     </div>
   );
@@ -136,7 +137,7 @@ function ContactForm({ cart }: { cart: OptimisticCart<CartApiQueryFragment | nul
           rows={4}
         />
       </div>
-      <div className="mb-6 max-h-60 overflow-y-auto">
+      <div className="mb-6">
         <label className="block text-zinc-100 font-semibold mb-2">Cart Summary:</label>
         {cartSummary.map((item, index) => (
           <div key={index} className="mb-4 flex items-start text-zinc-100">
